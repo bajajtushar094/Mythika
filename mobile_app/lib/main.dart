@@ -2,50 +2,125 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hexcolor/hexcolor.dart';
+import './Onboarding/screen1.dart';
 
+const Color primaryColor = Color(0xFF0A74DA);
+String brightRoseString = "#DA2942";
+Color brightRose = HexColor("#DA2942");
+
+final appTheme = {brightRose: brightRose};
+
+class AppPalette {
+  // Red
+  Color brightRose = HexColor("#DA2942");
+  Color orangeDew = HexColor("#FFBE71");
+  static const imperialRed = Color(0xFFE54B4B);
+
+  // White
+  static const seashell = Color(0xFFF7EBE8);
+
+  // Grey
+  static const grey = _GreyColors();
+}
+
+class _GreyColors {
+  const _GreyColors();
+
+  final grey50 = const Color(0xFFFAFAFA);
+  final grey100 = const Color(0xFFF5F5F5);
+}
+
+AppPalette appPalette = AppPalette();
 
 void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Namer App',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-        ),
-        home: MyHomePage(),
-      ),
-    );
-  }
-}
-
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
+  // runApp(MyApp());
+  runApp(MaterialApp(
+    home: MyHomePage(),
+    theme: ThemeData(useMaterial3: true),
+  ));
 }
 
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: Svg("assets/bg-image.svg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: null /* add child content here */,
-      ),
-    );
+    return new Scaffold(
+        body: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/bg-landing.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    //ROW 1
+                    children: [
+                      Container(
+                        width: 375,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/Welcome.png"),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(//ROW 2
+                      children: [
+                        Container(
+                          width: 350,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text("Welcome To Mythika,", style: TextStyle(color: appPalette.brightRose, fontSize: 24, decoration: TextDecoration.none, fontWeight: FontWeight.w900)),
+                          )
+                        )
+                  ]),
+                  Row(//ROW 2
+                      children: [
+                        Container(
+                            width: 380,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text("your companion for menopause", style: TextStyle(color: appPalette.brightRose, fontSize: 18, decoration: TextDecoration.none, fontWeight: FontWeight.w600)),
+                            )
+                        )
+                      ]),
+                  Row(// ROW 3
+                      children: [
+                    Container(
+                      width:175,
+                      margin: EdgeInsets.only(top:45.0, left: 50.0),
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(appPalette.orangeDew),
+                          foregroundColor: MaterialStateProperty.all<Color>(appPalette.brightRose),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen1()));
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            style: TextStyle(color: appPalette.brightRose, fontSize: 18, decoration: TextDecoration.none, fontWeight: FontWeight.w600),
+                            children: [
+                              TextSpan(text: 'Explore'),
+                              WidgetSpan(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.arrow_forward),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                        //Text('TextButton' , style: TextStyle(color: appPalette.brightRose, fontSize: 18, decoration: TextDecoration.none)),
+                      ),
+                    ),
+                  ]),
+                ])));
   }
 }

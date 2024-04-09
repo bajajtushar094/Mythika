@@ -36,6 +36,7 @@ AppPalette appPalette = AppPalette();
 void main() {
   // runApp(MyApp());
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: MyHomePage(),
     theme: ThemeData(useMaterial3: true),
   ));

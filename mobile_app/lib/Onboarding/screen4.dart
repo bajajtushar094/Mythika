@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import './phone_number.dart';
+import '../main_screens/landing_page.dart';
 
 class AppPalette {
   // Red
@@ -82,7 +83,7 @@ class screen4 extends StatelessWidget {
                                 foregroundColor: MaterialStateProperty.all<Color>(appPalette.brightRose),
                               ),
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => phone_number()));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
                               },
                               child: RichText(
                                 text: TextSpan(

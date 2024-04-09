@@ -1,6 +1,8 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:namer_app/symptoms/low_energy.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -221,30 +223,34 @@ class landing_page extends StatelessWidget {
                                                               top: 25.0,
                                                               bottom: 5.0,
                                                               left: 25.0),
-                                                      child: Text('Want to talk?',
+                                                      child: Text(
+                                                          'Want to talk?',
                                                           style: TextStyle(
                                                               fontSize: 20,
                                                               color: appPalette
                                                                   .black))))
                                             ]),
                                             Container(
-                                              height: 50,
-                                              margin: const EdgeInsets.only(
-                                                  left: 10.0, right: 10.0),
-                                              child: Card(
-                                                color: appPalette.white,
-                                                elevation: 5,
-                                                child: TextField(
-                                                  decoration: InputDecoration(
-                                                    border: InputBorder.none,
-                                                    hintStyle: TextStyle(fontSize: 20.0, color: appPalette.lightGrey),
-                                                    contentPadding: EdgeInsets.all(10.0),
-                                                    hintText:
-                                                    'Enter a search term',
+                                                height: 50,
+                                                margin: const EdgeInsets.only(
+                                                    left: 10.0, right: 10.0),
+                                                child: Card(
+                                                  color: appPalette.white,
+                                                  elevation: 5,
+                                                  child: TextField(
+                                                    decoration: InputDecoration(
+                                                      border: InputBorder.none,
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 20.0,
+                                                          color: appPalette
+                                                              .lightGrey),
+                                                      contentPadding:
+                                                          EdgeInsets.all(10.0),
+                                                      hintText:
+                                                          'Enter a search term',
+                                                    ),
                                                   ),
-                                                ),
-                                              )
-                                            )
+                                                ))
                                           ],
                                         )))),
                             Container(
@@ -258,24 +264,33 @@ class landing_page extends StatelessWidget {
                                           children: <Widget>[
                                             Row(children: [
                                               Container(
-                                                width:275,
+                                                  width: 275,
                                                   child: Padding(
                                                       padding:
-                                                      const EdgeInsets.only(
-                                                          top: 25.0,
-                                                          bottom: 5.0,
-                                                          left: 25.0),
-                                                      child: Text('Which one of these trouble you the most?',
+                                                          const EdgeInsets.only(
+                                                              top: 25.0,
+                                                              bottom: 5.0,
+                                                              left: 25.0),
+                                                      child: Text(
+                                                          'Which one of these trouble you the most?',
                                                           style: TextStyle(
                                                               fontSize: 20,
                                                               color: appPalette
                                                                   .black))))
                                             ]),
-                                            Row(children: [
-                                              text_card({"text":"Low energy"}),
-                                              text_card({"text":"Low energy"})
-                                            ],)
-
+                                            Row(
+                                              children: [
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      Get.to(LowEnergy());
+                                                    },
+                                                    child: text_card({
+                                                      "text": "Low energy"
+                                                    })),
+                                                text_card(
+                                                    {"text": "Low energy"})
+                                              ],
+                                            )
                                           ],
                                         )))),
                           ],

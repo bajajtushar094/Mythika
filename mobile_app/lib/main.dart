@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -35,7 +36,7 @@ AppPalette appPalette = AppPalette();
 
 void main() {
   // runApp(MyApp());
-  runApp(MaterialApp(
+  runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     home: MyHomePage(),
     theme: ThemeData(useMaterial3: true),
@@ -73,53 +74,69 @@ class MyHomePage extends StatelessWidget {
                   ),
                   Row(//ROW 2
                       children: [
-                        Container(
-                          width: 350,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text("Welcome To Mythika,", style: TextStyle(color: appPalette.brightRose, fontSize: 24, decoration: TextDecoration.none, fontWeight: FontWeight.w900)),
-                          )
-                        )
+                    Container(
+                        width: 350,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Welcome To Mythika,",
+                              style: TextStyle(
+                                  color: appPalette.brightRose,
+                                  fontSize: 24,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.w900)),
+                        ))
                   ]),
                   Row(//ROW 2
                       children: [
-                        Container(
-                            width: 380,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text("your companion for menopause", style: TextStyle(color: appPalette.brightRose, fontSize: 18, decoration: TextDecoration.none, fontWeight: FontWeight.w600)),
-                            )
-                        )
-                      ]),
+                    Container(
+                        width: 380,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("your companion for menopause",
+                              style: TextStyle(
+                                  color: appPalette.brightRose,
+                                  fontSize: 18,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.w600)),
+                        ))
+                  ]),
                   Row(// ROW 3
                       children: [
                     Container(
-                      width:175,
-                      margin: EdgeInsets.only(top:45.0, left: 50.0),
+                      width: 175,
+                      margin: EdgeInsets.only(top: 45.0, left: 50.0),
                       child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(appPalette.orangeDew),
-                          foregroundColor: MaterialStateProperty.all<Color>(appPalette.brightRose),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen1()));
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(color: appPalette.brightRose, fontSize: 18, decoration: TextDecoration.none, fontWeight: FontWeight.w600),
-                            children: [
-                              TextSpan(text: 'Explore'),
-                              WidgetSpan(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                                  child: Icon(Icons.arrow_forward),
-                                ),
-                              ),
-                            ],
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                appPalette.orangeDew),
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                appPalette.brightRose),
                           ),
-                        )
-                        //Text('TextButton' , style: TextStyle(color: appPalette.brightRose, fontSize: 18, decoration: TextDecoration.none)),
-                      ),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => screen1()));
+                          },
+                          child: RichText(
+                            text: TextSpan(
+                              style: TextStyle(
+                                  color: appPalette.brightRose,
+                                  fontSize: 18,
+                                  decoration: TextDecoration.none,
+                                  fontWeight: FontWeight.w600),
+                              children: [
+                                TextSpan(text: 'Explore'),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 2.0),
+                                    child: Icon(Icons.arrow_forward),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                          //Text('TextButton' , style: TextStyle(color: appPalette.brightRose, fontSize: 18, decoration: TextDecoration.none)),
+                          ),
                     ),
                   ]),
                 ])));

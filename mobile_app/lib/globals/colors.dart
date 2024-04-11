@@ -12,4 +12,5 @@ class MyColors {
   static Color lightGrey = HexColor("#B9B9B9");
   static Color grey50 = const Color(0xFFFAFAFA);
   static Color grey100 = const Color(0xFFF5F5F5);
+  static Color grey300 = HexColor("#7d7d7d");
 }

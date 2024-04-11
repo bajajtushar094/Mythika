@@ -5,8 +5,8 @@ import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
-class LowEnergy extends StatelessWidget {
-  const LowEnergy({super.key});
+class Periods extends StatelessWidget {
+  const Periods({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class LowEnergy extends StatelessWidget {
                   height: 16,
                 ),
                 Text(
-                  "Low Energy",
+                  "Periods",
                   style: TextStyle(
                       color: brightRose,
                       fontSize: 26,
@@ -57,7 +57,106 @@ class LowEnergy extends StatelessWidget {
                 SizedBox(
                   height: 16,
                 ),
-                headingText("Frequency"),
+                headingText("Once in"),
+                Container(
+                  height: 80,
+                  width: double.maxFinite,
+                  child: Card(
+                    color: MyColors.white,
+                    elevation: 5,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "28 days",
+                          style:
+                              TextStyle(fontSize: 20, color: MyColors.grey300),
+                        ),
+                        Expanded(child: SizedBox()),
+                        buttonCustom(1),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        buttonCustom(2),
+                        SizedBox(
+                          width: 20,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                headingText("Duration"),
+                Container(
+                  height: 80,
+                  width: double.maxFinite,
+                  child: Card(
+                    color: MyColors.white,
+                    elevation: 5,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "6 days",
+                          style:
+                              TextStyle(fontSize: 20, color: MyColors.grey300),
+                        ),
+                        Expanded(child: SizedBox()),
+                        buttonCustom(1),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        buttonCustom(2),
+                        SizedBox(
+                          width: 20,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                headingText("No. of pads/tampons used a day"),
+                Container(
+                  height: 80,
+                  width: double.maxFinite,
+                  child: Card(
+                    color: MyColors.white,
+                    elevation: 5,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "4",
+                          style:
+                              TextStyle(fontSize: 20, color: MyColors.grey300),
+                        ),
+                        Expanded(child: SizedBox()),
+                        buttonCustom(1),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        buttonCustom(2),
+                        SizedBox(
+                          width: 20,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                headingText("Impact on daily life"),
                 Container(
                   height: 80,
                   width: double.maxFinite,
@@ -72,94 +171,14 @@ class LowEnergy extends StatelessWidget {
                             max: 100,
                             min: 0,
                           ),
-                          belowSlider("often")
+                          belowSlider("a lot")
                         ],
                       )),
                 ),
                 SizedBox(
                   height: 16,
                 ),
-                headingText("Onset"),
-                Row(
-                  children: [textCard("Abrupt"), textCard("Gradual")],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                headingText("Trigger"),
-                Row(
-                  children: [textCard("Yes"), textCard("No")],
-                ),
-                Container(
-                    height: 50,
-                    child: Card(
-                      color: MyColors.white,
-                      elevation: 5,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(
-                              fontSize: 20.0, color: MyColors.lightGrey),
-                          contentPadding:
-                              EdgeInsets.only(left: 10.0, right: 10, bottom: 8),
-                          hintText: 'What was the trigger? Type here',
-                        ),
-                      ),
-                    )),
-                SizedBox(
-                  height: 16,
-                ),
-                headingText("Duration"),
-                SizedBox(
-                  height: 100,
-                  child: ListWheelScrollView(
-                    itemExtent: 40, // Height of each item
-                    diameterRatio: 10, // Controls the size of the wheel
-                    children: [
-                      listViewContainer("1 day"),
-                      listViewContainer("2 days"),
-                      listViewContainer("3 days"),
-                      listViewContainer("4 days"),
-                      listViewContainer("5 days"),
-                      listViewContainer("6 days"),
-                      listViewContainer("1 week"),
-                      listViewContainer("2 week"),
-                    ],
-                    onSelectedItemChanged: (index) {},
-                  ),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                headingText("Condition"),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        textCard("Stable"),
-                        textCard("Improving"),
-                      ],
-                    ),
-                    Row(
-                      children: [textCard("Worsening")],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                headingText("Worst In"),
-                Row(
-                  children: [
-                    textCard("Morning"),
-                    textCard("Mid-day"),
-                    textCard("Night")
-                  ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                headingText("Impact on daily life"),
+                headingText("Pain"),
                 Container(
                   height: 80,
                   width: double.maxFinite,
@@ -208,6 +227,19 @@ class LowEnergy extends StatelessWidget {
     );
   }
 
+  Widget buttonCustom(int i) {
+    return Container(
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+          color: MyColors.purpleMint, borderRadius: BorderRadius.circular(25)),
+      child: Icon(
+        i == 1 ? Icons.remove : Icons.add,
+        color: MyColors.white,
+      ),
+    );
+  }
+
   Row headingText(String text) {
     return Row(
       children: [
@@ -240,38 +272,6 @@ class LowEnergy extends StatelessWidget {
           width: 20,
         ),
       ],
-    );
-  }
-
-  Widget listViewContainer(String text) {
-    return Container(
-      height: 30,
-      width: double.maxFinite,
-      child: Center(
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
-  }
-
-  Widget textCard(String text) {
-    return Container(
-      height: 45,
-      child: Card(
-        color: MyColors.cherryBlossomLight,
-        elevation: 5,
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 5.0, bottom: 5, left: 10, right: 10),
-          child: Center(
-              child: Text(
-            text,
-            style: TextStyle(fontSize: 20),
-          )),
-        ),
-      ),
     );
   }
 }

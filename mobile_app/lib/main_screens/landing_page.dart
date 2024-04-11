@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:namer_app/symptoms/low_energy.dart';
+import 'package:namer_app/symptoms/periods.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -287,8 +288,13 @@ class landing_page extends StatelessWidget {
                                                     child: text_card({
                                                       "text": "Low energy"
                                                     })),
-                                                text_card(
-                                                    {"text": "Low energy"})
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Get.to(Periods());
+                                                  },
+                                                  child: text_card(
+                                                      {"text": "Periods"}),
+                                                )
                                               ],
                                             )
                                           ],

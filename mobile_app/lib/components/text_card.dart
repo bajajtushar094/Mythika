@@ -38,7 +38,7 @@ class text_card extends StatelessWidget {
     return Container(
         height: 55,
         margin: const EdgeInsets.only(
-            left: 20.0),
+            left: 10.0, bottom: 5.0),
         child: Card(
             color: appPalette.cherryBlossomLight,
             elevation: 5,

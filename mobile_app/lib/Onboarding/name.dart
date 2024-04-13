@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import './screen2.dart';
-import './otp.dart';
+import '../main_screens/landing_page.dart';
 import 'package:namer_app/globals/colors.dart';
 
 class AppPalette {
@@ -31,7 +31,7 @@ class _GreyColors {
 
 AppPalette appPalette = AppPalette();
 
-class phone_number extends StatelessWidget {
+class name extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -49,31 +49,17 @@ class phone_number extends StatelessWidget {
                   children: [
                     Container(
                         child: RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                            color: appPalette.brightRose,
-                            fontSize: 26,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w900),
-                        children: [
-                          TextSpan(text: 'Ready, set, go!'),
-                        ],
-                      ),
-                    )),
-                    Container(
-                        child: RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                            color: appPalette.brightRose,
-                            fontSize: 18,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w600),
-                        children: [
-                          TextSpan(
-                              text: 'Let us log into this safe place of yours'),
-                        ],
-                      ),
-                    )),
+                          text: TextSpan(
+                            style: TextStyle(
+                                color: appPalette.brightRose,
+                                fontSize: 26,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.w600),
+                            children: [
+                              TextSpan(text: 'What should we call you?'),
+                            ],
+                          ),
+                        )),
                     Container(
                         height: 50,
                         margin: const EdgeInsets.only(
@@ -83,7 +69,7 @@ class phone_number extends StatelessWidget {
                           elevation: 5,
                           child: TextField(
                             onSubmitted: (value) {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => otp()));
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
@@ -91,7 +77,7 @@ class phone_number extends StatelessWidget {
                               hintStyle: TextStyle(
                                   fontSize: 20.0, color: MyColors.grey300, fontWeight: FontWeight.w400),
                               contentPadding: EdgeInsets.all(10.0),
-                              hintText: 'Please enter your phone number',
+                              hintText: 'Type your name here, pretty',
                             ),
                           ),
                         ))

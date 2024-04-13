@@ -84,7 +84,7 @@ class screen4 extends StatelessWidget {
                                 foregroundColor: MaterialStateProperty.all<Color>(appPalette.brightRose),
                               ),
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => phone_number()));
                               },
                               child: RichText(
                                 text: TextSpan(

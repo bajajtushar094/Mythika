@@ -298,7 +298,7 @@ class landing_page extends StatelessWidget {
                                                     })),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Get.to(SkinRashes());
+                                                    Get.to(Periods());
                                                   },
                                                   child: text_card(
                                                       {"text": "Periods"}),
@@ -308,13 +308,17 @@ class landing_page extends StatelessWidget {
                                             Row(
                                               children: [
                                                 GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(WeightChanges());
+                                                  },
                                                   child: text_card({
                                                     "text": "Weight Changes"
                                                   }),
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(BrainFog());
+                                                  },
                                                   child: text_card(
                                                       {"text": "Brain Fog"}),
                                                 )
@@ -323,12 +327,16 @@ class landing_page extends StatelessWidget {
                                             Row(
                                               children: [
                                                 GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(HotFlashes());
+                                                  },
                                                   child: text_card(
                                                       {"text": "Hot Flashes"}),
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(NightSweats())
+                                                  },
                                                   child: text_card(
                                                       {"text": "Night sweats"}),
                                                 )
@@ -337,13 +345,17 @@ class landing_page extends StatelessWidget {
                                             Row(
                                               children: [
                                                 GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(VaginalDryness());
+                                                  },
                                                   child: text_card({
                                                     "text": "Vaginal dryness"
                                                   }),
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(SkinRashes());
+                                                  },
                                                   child: text_card(
                                                       {"text": "Skin rashes"}),
                                                 )
@@ -352,7 +364,9 @@ class landing_page extends StatelessWidget {
                                             Row(
                                               children: [
                                                 GestureDetector(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Get.to(JointDiscomfort());
+                                                  },
                                                   child: text_card({
                                                     "text":
                                                         "Joint/Muscle discomfort"

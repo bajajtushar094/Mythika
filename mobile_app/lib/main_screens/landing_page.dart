@@ -2,8 +2,15 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:namer_app/symptoms/brain_fog.dart';
+import 'package:namer_app/symptoms/hot_flashes.dart';
+import 'package:namer_app/symptoms/joint_discomfort.dart';
 import 'package:namer_app/symptoms/low_energy.dart';
+import 'package:namer_app/symptoms/night_sweats.dart';
 import 'package:namer_app/symptoms/periods.dart';
+import 'package:namer_app/symptoms/skin_rashes.dart';
+import 'package:namer_app/symptoms/vaginal_dryness.dart';
+import 'package:namer_app/symptoms/weight.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -290,11 +297,11 @@ class landing_page extends StatelessWidget {
                                                     })),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Get.to(Periods());
+                                                    Get.to(SkinRashes());
                                                   },
                                                   child: text_card(
-                                                      {"text": "Periods"}),
-                                                )
+                                                      {"text": "Skin rashes"}),
+                                                ),
                                               ],
                                             )
                                           ],

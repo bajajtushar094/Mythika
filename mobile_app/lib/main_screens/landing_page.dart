@@ -335,7 +335,7 @@ class landing_page extends StatelessWidget {
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Get.to(NightSweats())
+                                                    Get.to(NightSweats());
                                                   },
                                                   child: text_card(
                                                       {"text": "Night sweats"}),

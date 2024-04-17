@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
 class Periods extends StatelessWidget {
-  const Periods({super.key});
+  SymptomController symptomController = Get.put(SymptomController());
+  Periods({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,17 +71,29 @@ class Periods extends StatelessWidget {
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          "28 days",
-                          style:
-                              TextStyle(fontSize: 20, color: MyColors.grey300),
-                        ),
+                        Obx(() {
+                          return Text(
+                            "${symptomController.P_once.value} days",
+                            style: TextStyle(
+                                fontSize: 20, color: MyColors.grey300),
+                          );
+                        }),
                         Expanded(child: SizedBox()),
-                        buttonCustom(1),
+                        GestureDetector(
+                            onTap: () {
+                              if (symptomController.P_once.value > 0) {
+                                symptomController.P_once.value--;
+                              }
+                            },
+                            child: buttonCustom(1)),
                         SizedBox(
                           width: 10,
                         ),
-                        buttonCustom(2),
+                        GestureDetector(
+                            onTap: () {
+                              symptomController.P_once.value++;
+                            },
+                            child: buttonCustom(2)),
                         SizedBox(
                           width: 20,
                         )
@@ -102,17 +116,29 @@ class Periods extends StatelessWidget {
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          "6 days",
-                          style:
-                              TextStyle(fontSize: 20, color: MyColors.grey300),
-                        ),
+                        Obx(() {
+                          return Text(
+                            "${symptomController.P_duration.value} days",
+                            style: TextStyle(
+                                fontSize: 20, color: MyColors.grey300),
+                          );
+                        }),
                         Expanded(child: SizedBox()),
-                        buttonCustom(1),
+                        GestureDetector(
+                            onTap: () {
+                              if (symptomController.P_duration.value > 0) {
+                                symptomController.P_duration.value--;
+                              }
+                            },
+                            child: buttonCustom(1)),
                         SizedBox(
                           width: 10,
                         ),
-                        buttonCustom(2),
+                        GestureDetector(
+                            onTap: () {
+                              symptomController.P_duration.value++;
+                            },
+                            child: buttonCustom(2)),
                         SizedBox(
                           width: 20,
                         )
@@ -135,17 +161,29 @@ class Periods extends StatelessWidget {
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          "4",
-                          style:
-                              TextStyle(fontSize: 20, color: MyColors.grey300),
-                        ),
+                        Obx(() {
+                          return Text(
+                            "${symptomController.P_pads.value}",
+                            style: TextStyle(
+                                fontSize: 20, color: MyColors.grey300),
+                          );
+                        }),
                         Expanded(child: SizedBox()),
-                        buttonCustom(1),
+                        GestureDetector(
+                            onTap: () {
+                              if (symptomController.P_pads.value > 0) {
+                                symptomController.P_pads.value--;
+                              }
+                            },
+                            child: buttonCustom(1)),
                         SizedBox(
                           width: 10,
                         ),
-                        buttonCustom(2),
+                        GestureDetector(
+                            onTap: () {
+                              symptomController.P_pads.value++;
+                            },
+                            child: buttonCustom(2)),
                         SizedBox(
                           width: 20,
                         )
@@ -165,12 +203,16 @@ class Periods extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.P_impact.value,
+                              onChanged: (newRating) {
+                                symptomController.P_impact.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("a lot")
                         ],
                       )),
@@ -187,12 +229,16 @@ class Periods extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.P_pain.value,
+                              onChanged: (newRating) {
+                                symptomController.P_pain.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("a lot")
                         ],
                       )),

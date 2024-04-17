@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
 class LowEnergy extends StatelessWidget {
-  const LowEnergy({super.key});
+  SymptomController symptomController = Get.put(SymptomController());
+  LowEnergy({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +68,16 @@ class LowEnergy extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.LE_freq.value,
+                              onChanged: (newRating) {
+                                symptomController.LE_freq.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("often")
                         ],
                       )),
@@ -80,22 +86,55 @@ class LowEnergy extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Onset"),
-                Row(
-                  children: [textCard("Abrupt"), textCard("Gradual")],
-                ),
+                Obx(() {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.LE_onset.value = 1;
+                          },
+                          child: textCard("Abrupt",
+                              symptomController.LE_onset.value == 1 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.LE_onset.value = 2;
+                          },
+                          child: textCard("Gradual",
+                              symptomController.LE_onset.value == 2 ? 1 : 0))
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
                 headingText("Trigger"),
-                Row(
-                  children: [textCard("Yes"), textCard("No")],
-                ),
+                Obx(() {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.LE_trigger.value = 1;
+                          },
+                          child: textCard("Yes",
+                              symptomController.LE_trigger.value == 1 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.LE_trigger.value = 2;
+                          },
+                          child: textCard("No",
+                              symptomController.LE_trigger.value == 2 ? 1 : 0)),
+                    ],
+                  );
+                }),
                 Container(
                     height: 50,
                     child: Card(
                       color: MyColors.white,
                       elevation: 5,
                       child: TextField(
+                        onChanged: (v) {
+                          symptomController.LE_text.value = v;
+                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintStyle: TextStyle(
@@ -110,52 +149,101 @@ class LowEnergy extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Duration"),
-                SizedBox(
-                  height: 100,
-                  child: ListWheelScrollView(
-                    itemExtent: 40, // Height of each item
-                    diameterRatio: 10, // Controls the size of the wheel
-                    children: [
-                      listViewContainer("1 day"),
-                      listViewContainer("2 days"),
-                      listViewContainer("3 days"),
-                      listViewContainer("4 days"),
-                      listViewContainer("5 days"),
-                      listViewContainer("6 days"),
-                      listViewContainer("1 week"),
-                      listViewContainer("2 week"),
-                    ],
-                    onSelectedItemChanged: (index) {},
-                  ),
-                ),
+                Obx(() {
+                  return SizedBox(
+                    height: 100,
+                    child: ListWheelScrollView(
+                      itemExtent: 40,
+                      diameterRatio: 8,
+                      children: [
+                        listViewContainer("1 day", 0),
+                        listViewContainer("2 days", 1),
+                        listViewContainer("3 days", 2),
+                        listViewContainer("4 days", 3),
+                        listViewContainer("5 days", 4),
+                        listViewContainer("6 days", 5),
+                        listViewContainer("1 week", 6),
+                        listViewContainer("2 week", 7),
+                      ],
+                      onSelectedItemChanged: (index) {
+                        symptomController.LE_duration.value = index;
+                      },
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
                 headingText("Condition"),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        textCard("Stable"),
-                        textCard("Improving"),
-                      ],
-                    ),
-                    Row(
-                      children: [textCard("Worsening")],
-                    )
-                  ],
-                ),
+                Obx(() {
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                symptomController.LE_condition.value = 1;
+                              },
+                              child: textCard(
+                                  "Stable",
+                                  symptomController.LE_condition.value == 1
+                                      ? 1
+                                      : 0)),
+                          GestureDetector(
+                              onTap: () {
+                                symptomController.LE_condition.value = 2;
+                              },
+                              child: textCard(
+                                  "Improving",
+                                  symptomController.LE_condition.value == 2
+                                      ? 1
+                                      : 0)),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                symptomController.LE_condition.value = 3;
+                              },
+                              child: textCard(
+                                  "Worsening",
+                                  symptomController.LE_condition.value == 3
+                                      ? 1
+                                      : 0)),
+                        ],
+                      )
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
                 headingText("Worst In"),
-                Row(
-                  children: [
-                    textCard("Morning"),
-                    textCard("Mid-day"),
-                    textCard("Night")
-                  ],
-                ),
+                Obx(() {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.LE_worst.value = 1;
+                          },
+                          child: textCard("Morning",
+                              symptomController.LE_worst.value == 1 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.LE_worst.value = 2;
+                          },
+                          child: textCard("Mid-day",
+                              symptomController.LE_worst.value == 2 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.LE_worst.value = 3;
+                          },
+                          child: textCard("Night",
+                              symptomController.LE_worst.value == 3 ? 1 : 0))
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
@@ -168,12 +256,16 @@ class LowEnergy extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.LE_impact.value,
+                              onChanged: (newRating) {
+                                symptomController.LE_impact.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("a lot")
                         ],
                       )),
@@ -243,24 +335,32 @@ class LowEnergy extends StatelessWidget {
     );
   }
 
-  Widget listViewContainer(String text) {
+  Widget listViewContainer(String text, int i) {
     return Container(
       height: 30,
       width: double.maxFinite,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: symptomController.LE_duration.value == i ? MyColors.white : null,
+      ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(
+              fontSize: 20,
+              color: symptomController.LE_duration.value == i
+                  ? MyColors.black
+                  : MyColors.grey300),
         ),
       ),
     );
   }
 
-  Widget textCard(String text) {
+  Widget textCard(String text, int i) {
     return Container(
       height: 45,
       child: Card(
-        color: MyColors.cherryBlossomLight,
+        color: i == 0 ? MyColors.cherryBlossomLight : MyColors.orangeDew,
         elevation: 5,
         child: Padding(
           padding:

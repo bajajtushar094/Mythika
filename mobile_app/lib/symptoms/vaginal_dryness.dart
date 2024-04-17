@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
 class VaginalDryness extends StatelessWidget {
-  const VaginalDryness({super.key});
+  SymptomController symptomController = Get.put(SymptomController());
+  VaginalDryness({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,24 +60,28 @@ class VaginalDryness extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Frequency"),
-                SizedBox(
-                  height: 100,
-                  child: ListWheelScrollView(
-                    itemExtent: 40, // Height of each item
-                    diameterRatio: 10, // Controls the size of the wheel
-                    children: [
-                      listViewContainer("2 hours"),
-                      listViewContainer("3 hours"),
-                      listViewContainer("4 hours"),
-                      listViewContainer("5 hours"),
-                      listViewContainer("6 hours"),
-                      listViewContainer("12 hours"),
-                      listViewContainer("1 day"),
-                      listViewContainer("2 day"),
-                    ],
-                    onSelectedItemChanged: (index) {},
-                  ),
-                ),
+                Obx(() {
+                  return SizedBox(
+                    height: 100,
+                    child: ListWheelScrollView(
+                      itemExtent: 40, // Height of each item
+                      diameterRatio: 10, // Controls the size of the wheel
+                      children: [
+                        listViewContainer("2 hours", 0),
+                        listViewContainer("3 hours", 1),
+                        listViewContainer("4 hours", 2),
+                        listViewContainer("5 hours", 3),
+                        listViewContainer("6 hours", 4),
+                        listViewContainer("12 hours", 5),
+                        listViewContainer("1 day", 6),
+                        listViewContainer("2 day", 7),
+                      ],
+                      onSelectedItemChanged: (index) {
+                        symptomController.V_frequency.value = index;
+                      },
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
@@ -91,17 +97,29 @@ class VaginalDryness extends StatelessWidget {
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          "6 days",
-                          style:
-                              TextStyle(fontSize: 20, color: MyColors.grey300),
-                        ),
+                        Obx(() {
+                          return Text(
+                            "${symptomController.V_duration.value} days",
+                            style: TextStyle(
+                                fontSize: 20, color: MyColors.grey300),
+                          );
+                        }),
                         Expanded(child: SizedBox()),
-                        buttonCustom(1),
+                        GestureDetector(
+                            onTap: () {
+                              if (symptomController.V_duration.value > 0) {
+                                symptomController.V_duration.value--;
+                              }
+                            },
+                            child: buttonCustom(1)),
                         SizedBox(
                           width: 10,
                         ),
-                        buttonCustom(2),
+                        GestureDetector(
+                            onTap: () {
+                              symptomController.V_duration.value++;
+                            },
+                            child: buttonCustom(2)),
                         SizedBox(
                           width: 20,
                         )
@@ -121,12 +139,16 @@ class VaginalDryness extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.V_severity.value,
+                              onChanged: (newRating) {
+                                symptomController.V_severity.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("high")
                         ],
                       )),
@@ -143,12 +165,16 @@ class VaginalDryness extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.V_sexual.value,
+                              onChanged: (newRating) {
+                                symptomController.V_sexual.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("high")
                         ],
                       )),
@@ -165,12 +191,16 @@ class VaginalDryness extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.V_daily.value,
+                              onChanged: (newRating) {
+                                symptomController.V_daily.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("comfortable")
                         ],
                       )),
@@ -205,14 +235,22 @@ class VaginalDryness extends StatelessWidget {
     );
   }
 
-  Widget listViewContainer(String text) {
+  Widget listViewContainer(String text, int i) {
     return Container(
       height: 30,
       width: double.maxFinite,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: symptomController.LE_duration.value == i ? MyColors.white : null,
+      ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(
+              fontSize: 20,
+              color: symptomController.V_frequency.value == i
+                  ? MyColors.black
+                  : MyColors.grey300),
         ),
       ),
     );

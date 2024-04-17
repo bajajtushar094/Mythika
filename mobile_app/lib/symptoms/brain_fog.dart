@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
 class BrainFog extends StatelessWidget {
-  const BrainFog({super.key});
+  SymptomController symptomController = Get.put(SymptomController());
+  BrainFog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +68,16 @@ class BrainFog extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.B_impact.value,
+                              onChanged: (newRating) {
+                                symptomController.B_impact.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("a lot")
                         ],
                       )),
@@ -86,6 +92,9 @@ class BrainFog extends StatelessWidget {
                       color: MyColors.white,
                       elevation: 5,
                       child: TextField(
+                        onChanged: (v) {
+                          symptomController.B_note.value = v;
+                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintStyle: TextStyle(

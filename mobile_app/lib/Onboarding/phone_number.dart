@@ -83,7 +83,7 @@ class phone_number extends StatelessWidget {
                           elevation: 5,
                           child: TextField(
                             onSubmitted: (value) {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => otp()));
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(

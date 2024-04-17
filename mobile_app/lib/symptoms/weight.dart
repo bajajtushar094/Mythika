@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
 class WeightChanges extends StatelessWidget {
-  const WeightChanges({super.key});
+  SymptomController symptomController = Get.put(SymptomController());
+  WeightChanges({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,56 +60,78 @@ class WeightChanges extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Earlier body weight"),
-                SizedBox(
-                  height: 100,
-                  child: ListWheelScrollView(
-                    itemExtent: 40,
-                    diameterRatio: 10,
-                    children: List.generate(
-                      51, // Number of items (100 - 50 + 1)
-                      (index) => listViewContainer("${index + 50} kg"),
+                Obx(() {
+                  return SizedBox(
+                    height: 100,
+                    child: ListWheelScrollView(
+                      itemExtent: 40,
+                      diameterRatio: 10,
+                      children: List.generate(
+                        51,
+                        (index) => listViewContainer("${index + 50} kg",
+                            symptomController.W_earlier.value == index ? 1 : 0),
+                      ),
+                      onSelectedItemChanged: (index) {
+                        symptomController.W_earlier.value = index;
+                      },
                     ),
-                    onSelectedItemChanged: (index) {},
-                  ),
-                ),
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
                 headingText("Later body weight"),
-                SizedBox(
-                  height: 100,
-                  child: ListWheelScrollView(
-                    itemExtent: 40,
-                    diameterRatio: 10,
-                    children: List.generate(
-                      51, // Number of items (100 - 50 + 1)
-                      (index) => listViewContainer("${index + 50} kg"),
+                Obx(() {
+                  return SizedBox(
+                    height: 100,
+                    child: ListWheelScrollView(
+                      itemExtent: 40,
+                      diameterRatio: 10,
+                      children: List.generate(
+                        51,
+                        (index) => listViewContainer("${index + 50} kg",
+                            symptomController.W_later.value == index ? 1 : 0),
+                      ),
+                      onSelectedItemChanged: (index) {
+                        symptomController.W_later.value = index;
+                      },
                     ),
-                    onSelectedItemChanged: (index) {},
-                  ),
-                ),
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
                 headingText("Time in between"),
-                SizedBox(
-                  height: 100,
-                  child: ListWheelScrollView(
-                    itemExtent: 40, // Height of each item
-                    diameterRatio: 10, // Controls the size of the wheel
-                    children: [
-                      listViewContainer("1 day"),
-                      listViewContainer("2 days"),
-                      listViewContainer("3 days"),
-                      listViewContainer("4 days"),
-                      listViewContainer("5 days"),
-                      listViewContainer("6 days"),
-                      listViewContainer("1 week"),
-                      listViewContainer("2 week"),
-                    ],
-                    onSelectedItemChanged: (index) {},
-                  ),
-                ),
+                Obx(() {
+                  return SizedBox(
+                    height: 100,
+                    child: ListWheelScrollView(
+                      itemExtent: 40, // Height of each item
+                      diameterRatio: 10, // Controls the size of the wheel
+                      children: [
+                        listViewContainer("1 day",
+                            symptomController.W_time.value == 0 ? 1 : 0),
+                        listViewContainer("2 days",
+                            symptomController.W_time.value == 1 ? 1 : 0),
+                        listViewContainer("3 days",
+                            symptomController.W_time.value == 2 ? 1 : 0),
+                        listViewContainer("4 days",
+                            symptomController.W_time.value == 3 ? 1 : 0),
+                        listViewContainer("5 days",
+                            symptomController.W_time.value == 4 ? 1 : 0),
+                        listViewContainer("6 days",
+                            symptomController.W_time.value == 5 ? 1 : 0),
+                        listViewContainer("1 week",
+                            symptomController.W_time.value == 6 ? 1 : 0),
+                        listViewContainer("2 week",
+                            symptomController.W_time.value == 7 ? 1 : 0),
+                      ],
+                      onSelectedItemChanged: (index) {
+                        symptomController.W_time.value = index;
+                      },
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
@@ -120,12 +144,16 @@ class WeightChanges extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.W_impact.value,
+                              onChanged: (newRating) {
+                                symptomController.W_impact.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("a lot")
                         ],
                       )),
@@ -195,14 +223,19 @@ class WeightChanges extends StatelessWidget {
     );
   }
 
-  Widget listViewContainer(String text) {
+  Widget listViewContainer(String text, int i) {
     return Container(
       height: 30,
       width: double.maxFinite,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: i == 1 ? MyColors.white : null,
+      ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(
+              fontSize: 20, color: i == 1 ? MyColors.black : MyColors.grey300),
         ),
       ),
     );

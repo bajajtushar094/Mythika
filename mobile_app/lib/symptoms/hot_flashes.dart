@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
 class HotFlashes extends StatelessWidget {
-  const HotFlashes({super.key});
+  SymptomController symptomController = Get.put(SymptomController());
+  HotFlashes({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,24 +60,28 @@ class HotFlashes extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Frequency"),
-                SizedBox(
-                  height: 100,
-                  child: ListWheelScrollView(
-                    itemExtent: 40, // Height of each item
-                    diameterRatio: 10, // Controls the size of the wheel
-                    children: [
-                      listViewContainer("2 hours"),
-                      listViewContainer("3 hours"),
-                      listViewContainer("4 hours"),
-                      listViewContainer("5 hours"),
-                      listViewContainer("6 hours"),
-                      listViewContainer("12 hours"),
-                      listViewContainer("1 day"),
-                      listViewContainer("2 day"),
-                    ],
-                    onSelectedItemChanged: (index) {},
-                  ),
-                ),
+                Obx(() {
+                  return SizedBox(
+                    height: 100,
+                    child: ListWheelScrollView(
+                      itemExtent: 40, // Height of each item
+                      diameterRatio: 10, // Controls the size of the wheel
+                      children: [
+                        listViewContainer("2 hours", 0),
+                        listViewContainer("3 hours", 1),
+                        listViewContainer("4 hours", 2),
+                        listViewContainer("5 hours", 3),
+                        listViewContainer("6 hours", 4),
+                        listViewContainer("12 hours", 5),
+                        listViewContainer("1 day", 6),
+                        listViewContainer("2 day", 7),
+                      ],
+                      onSelectedItemChanged: (index) {
+                        symptomController.H_frequency.value = index;
+                      },
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
@@ -88,12 +94,16 @@ class HotFlashes extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.H_intensity.value,
+                              onChanged: (newRating) {
+                                symptomController.H_intensity.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("high")
                         ],
                       )),
@@ -110,12 +120,16 @@ class HotFlashes extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.H_sleep.value,
+                              onChanged: (newRating) {
+                                symptomController.H_sleep.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("a lot")
                         ],
                       )),
@@ -132,12 +146,16 @@ class HotFlashes extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.H_daily.value,
+                              onChanged: (newRating) {
+                                symptomController.H_daily.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("a lot")
                         ],
                       )),
@@ -152,10 +170,14 @@ class HotFlashes extends StatelessWidget {
                       style: TextStyle(fontSize: 20),
                     ),
                     Expanded(child: SizedBox()),
-                    Switch(
-                      value: false,
-                      onChanged: (value) {},
-                    )
+                    Obx(() {
+                      return Switch(
+                        value: symptomController.H_tracking.value,
+                        onChanged: (value) {
+                          symptomController.H_tracking.value = value;
+                        },
+                      );
+                    })
                   ],
                 ),
                 SizedBox(
@@ -223,33 +245,22 @@ class HotFlashes extends StatelessWidget {
     );
   }
 
-  Widget listViewContainer(String text) {
+  Widget listViewContainer(String text, int i) {
     return Container(
       height: 30,
       width: double.maxFinite,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: symptomController.H_frequency.value == i ? MyColors.white : null,
+      ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
-  }
-
-  Widget textCard(String text) {
-    return Container(
-      height: 45,
-      child: Card(
-        color: MyColors.cherryBlossomLight,
-        elevation: 5,
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 5.0, bottom: 5, left: 10, right: 10),
-          child: Center(
-              child: Text(
-            text,
-            style: TextStyle(fontSize: 20),
-          )),
+          style: TextStyle(
+              fontSize: 20,
+              color: symptomController.H_frequency.value == i
+                  ? MyColors.black
+                  : MyColors.grey300),
         ),
       ),
     );

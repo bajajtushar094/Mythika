@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
 class JointDiscomfort extends StatelessWidget {
-  const JointDiscomfort({super.key});
+  SymptomController symptomController = Get.put(SymptomController());
+  JointDiscomfort({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,43 +60,106 @@ class JointDiscomfort extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Where does it hurt?"),
-                Row(
-                  children: [
-                    textCard("Knee"),
-                    textCard("Waist"),
-                    textCard("Neck"),
-                    textCard("Back")
-                  ],
-                ),
+                Obx(() {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_hurt.value = 1;
+                          },
+                          child: textCard("Knee",
+                              symptomController.J_hurt.value == 1 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_hurt.value = 2;
+                          },
+                          child: textCard("Waist",
+                              symptomController.J_hurt.value == 2 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_hurt.value = 3;
+                          },
+                          child: textCard("Neck",
+                              symptomController.J_hurt.value == 3 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_hurt.value = 4;
+                          },
+                          child: textCard("Back",
+                              symptomController.J_hurt.value == 4 ? 1 : 0))
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
                 headingText("Onset"),
-                Row(
-                  children: [textCard("Abrupt"), textCard("Gradual")],
-                ),
+                Obx(() {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_onset.value = 1;
+                          },
+                          child: textCard("Abrupt",
+                              symptomController.J_onset.value == 1 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_onset.value = 2;
+                          },
+                          child: textCard("Gradual",
+                              symptomController.J_onset.value == 2 ? 1 : 0))
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
                 headingText("Character"),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        textCard("Dull"),
-                        textCard("Sharp"),
-                        textCard("Tingling")
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        textCard("Shooting"),
-                        textCard("Sensation of heat"),
-                      ],
-                    ),
-                  ],
-                ),
-               
+                Obx(() {
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                symptomController.J_char.value = 1;
+                              },
+                              child: textCard("Dull",
+                                  symptomController.J_char.value == 1 ? 1 : 0)),
+                          GestureDetector(
+                              onTap: () {
+                                symptomController.J_char.value = 2;
+                              },
+                              child: textCard("Sharp",
+                                  symptomController.J_char.value == 2 ? 1 : 0)),
+                          GestureDetector(
+                              onTap: () {
+                                symptomController.J_char.value = 3;
+                              },
+                              child: textCard("Tingling",
+                                  symptomController.J_char.value == 3 ? 1 : 0))
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                symptomController.J_char.value = 4;
+                              },
+                              child: textCard("Shooting",
+                                  symptomController.J_char.value == 4 ? 1 : 0)),
+                          GestureDetector(
+                              onTap: () {
+                                symptomController.J_char.value = 5;
+                              },
+                              child: textCard("Sensation of heat",
+                                  symptomController.J_char.value == 5 ? 1 : 0)),
+                        ],
+                      ),
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
@@ -107,12 +172,16 @@ class JointDiscomfort extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.J_severity.value,
+                              onChanged: (newRating) {
+                                symptomController.J_severity.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("high")
                         ],
                       )),
@@ -121,29 +190,61 @@ class JointDiscomfort extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Worst in"),
-                Row(
-                  children: [
-                    textCard("Morning"),
-                    textCard("Mid-day"),
-                    textCard("Night")
-                  ],
-                ),
+                Obx(() {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_worst.value = 1;
+                          },
+                          child: textCard("Morning",
+                              symptomController.J_worst.value == 1 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_worst.value = 2;
+                          },
+                          child: textCard("Mid-day",
+                              symptomController.J_worst.value == 2 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_worst.value = 3;
+                          },
+                          child: textCard("Night",
+                              symptomController.J_worst.value == 3 ? 1 : 0))
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
                 headingText("Does the pain seem to radiate?"),
-                Row(
-                  children: [
-                    textCard("Yes"),
-                    textCard("No"),
-                  ],
-                ),
-                 Container(
+                Obx(() {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_pain.value = 1;
+                          },
+                          child: textCard("Yes",
+                              symptomController.J_pain.value == 1 ? 1 : 0)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.J_pain.value = 2;
+                          },
+                          child: textCard("No",
+                              symptomController.J_pain.value == 2 ? 1 : 0)),
+                    ],
+                  );
+                }),
+                Container(
                     height: 50,
                     child: Card(
                       color: MyColors.white,
                       elevation: 5,
                       child: TextField(
+                        onChanged: (v) {
+                          symptomController.J_radiate.value = v;
+                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintStyle: TextStyle(
@@ -158,12 +259,15 @@ class JointDiscomfort extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("What relieves the pain?"),
-                 Container(
+                Container(
                     height: 50,
                     child: Card(
                       color: MyColors.white,
                       elevation: 5,
                       child: TextField(
+                        onChanged: (v) {
+                          symptomController.J_relieve.value = v;
+                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintStyle: TextStyle(
@@ -178,12 +282,15 @@ class JointDiscomfort extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("What worsens the pain?"),
-                 Container(
+                Container(
                     height: 50,
                     child: Card(
                       color: MyColors.white,
                       elevation: 5,
                       child: TextField(
+                        onChanged: (v) {
+                          symptomController.J_worsen.value = v;
+                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintStyle: TextStyle(
@@ -272,11 +379,11 @@ class JointDiscomfort extends StatelessWidget {
     );
   }
 
-  Widget textCard(String text) {
+  Widget textCard(String text, int i) {
     return Container(
       height: 45,
       child: Card(
-        color: MyColors.cherryBlossomLight,
+        color: i == 1 ? MyColors.orangeDew : MyColors.cherryBlossomLight,
         elevation: 5,
         child: Padding(
           padding:

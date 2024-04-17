@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
 class SkinRashes extends StatelessWidget {
-  const SkinRashes({super.key});
+  SymptomController symptomController = Get.put(SymptomController());
+  SkinRashes({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +60,32 @@ class SkinRashes extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Location of rash"),
-                Row(
-                  children: [
-                    textCard("Face"),
-                    textCard("Arms"),
-                    textCard("Legs"),
-                    textCard("Torso")
-                  ],
-                ),
+                Obx(() {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.S_loc.value = 1;
+                          },
+                          child: textCard("Face", 1)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.S_loc.value = 2;
+                          },
+                          child: textCard("Arms", 2)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.S_loc.value = 3;
+                          },
+                          child: textCard("Legs", 3)),
+                      GestureDetector(
+                          onTap: () {
+                            symptomController.S_loc.value = 4;
+                          },
+                          child: textCard("Torso", 4))
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
@@ -81,17 +101,29 @@ class SkinRashes extends StatelessWidget {
                         SizedBox(
                           width: 20,
                         ),
-                        Text(
-                          "4 inches",
-                          style:
-                              TextStyle(fontSize: 20, color: MyColors.grey300),
-                        ),
+                        Obx(() {
+                          return Text(
+                            "${symptomController.S_size.value} inches",
+                            style: TextStyle(
+                                fontSize: 20, color: MyColors.grey300),
+                          );
+                        }),
                         Expanded(child: SizedBox()),
-                        buttonCustom(1),
+                        GestureDetector(
+                            onTap: () {
+                              if (symptomController.S_size.value > 0) {
+                                symptomController.S_size.value--;
+                              }
+                            },
+                            child: buttonCustom(1)),
                         SizedBox(
                           width: 10,
                         ),
-                        buttonCustom(2),
+                        GestureDetector(
+                            onTap: () {
+                              symptomController.S_size.value++;
+                            },
+                            child: buttonCustom(2)),
                         SizedBox(
                           width: 20,
                         )
@@ -103,24 +135,28 @@ class SkinRashes extends StatelessWidget {
                   height: 16,
                 ),
                 headingText("Duration"),
-                SizedBox(
-                  height: 100,
-                  child: ListWheelScrollView(
-                    itemExtent: 40, // Height of each item
-                    diameterRatio: 10, // Controls the size of the wheel
-                    children: [
-                      listViewContainer("2 hours"),
-                      listViewContainer("3 hours"),
-                      listViewContainer("4 hours"),
-                      listViewContainer("5 hours"),
-                      listViewContainer("6 hours"),
-                      listViewContainer("12 hours"),
-                      listViewContainer("1 day"),
-                      listViewContainer("2 day"),
-                    ],
-                    onSelectedItemChanged: (index) {},
-                  ),
-                ),
+                Obx(() {
+                  return SizedBox(
+                    height: 100,
+                    child: ListWheelScrollView(
+                      itemExtent: 40, // Height of each item
+                      diameterRatio: 10, // Controls the size of the wheel
+                      children: [
+                        listViewContainer("2 hours", 0),
+                        listViewContainer("3 hours", 1),
+                        listViewContainer("4 hours", 2),
+                        listViewContainer("5 hours", 3),
+                        listViewContainer("6 hours", 4),
+                        listViewContainer("12 hours", 5),
+                        listViewContainer("1 day", 6),
+                        listViewContainer("2 day", 7),
+                      ],
+                      onSelectedItemChanged: (index) {
+                        symptomController.S_duration.value = index;
+                      },
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: 16,
                 ),
@@ -133,12 +169,16 @@ class SkinRashes extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.S_well.value,
+                              onChanged: (newRating) {
+                                symptomController.S_well.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("high")
                         ],
                       )),
@@ -155,12 +195,16 @@ class SkinRashes extends StatelessWidget {
                       elevation: 5,
                       child: Column(
                         children: [
-                          Slider(
-                            value: 10,
-                            onChanged: (newRating) {},
-                            max: 100,
-                            min: 0,
-                          ),
+                          Obx(() {
+                            return Slider(
+                              value: symptomController.S_daily.value,
+                              onChanged: (newRating) {
+                                symptomController.S_daily.value = newRating;
+                              },
+                              max: 100,
+                              min: 0,
+                            );
+                          }),
                           belowSlider("comfortable")
                         ],
                       )),
@@ -195,14 +239,22 @@ class SkinRashes extends StatelessWidget {
     );
   }
 
-  Widget listViewContainer(String text) {
+  Widget listViewContainer(String text, int i) {
     return Container(
       height: 30,
       width: double.maxFinite,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: symptomController.S_duration.value == i ? MyColors.white : null,
+      ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(
+              fontSize: 20,
+              color: symptomController.S_duration.value == i
+                  ? MyColors.black
+                  : MyColors.grey300),
         ),
       ),
     );
@@ -232,11 +284,13 @@ class SkinRashes extends StatelessWidget {
     );
   }
 
-  Widget textCard(String text) {
+  Widget textCard(String text, int i) {
     return Container(
       height: 45,
       child: Card(
-        color: MyColors.cherryBlossomLight,
+        color: symptomController.S_loc.value == i
+            ? MyColors.orangeDew
+            : MyColors.cherryBlossomLight,
         elevation: 5,
         child: Padding(
           padding:

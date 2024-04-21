@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "616401169547",
+    "project_id": "mythika-d6e6a",
+    "storage_bucket": "mythika-d6e6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616401169547:android:acae6d64252c71c676788e",
+        "android_client_info": {
+          "package_name": "com.example.mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhr34_a582i-w3e-WeTC53mchEUOoYLno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

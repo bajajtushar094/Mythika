@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import './Onboarding/screen1.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 const Color primaryColor = Color(0xFF0A74DA);
 String brightRoseString = "#DA2942";
@@ -34,11 +36,13 @@ class _GreyColors {
 
 AppPalette appPalette = AppPalette();
 
-void main() {
+void main() async {
   // runApp(MyApp());
+WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp();
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    home: MyHomePage(),
+    home:  LoaderOverlay(child:MyHomePage()),
     theme: ThemeData(useMaterial3: true),
   ));
 }

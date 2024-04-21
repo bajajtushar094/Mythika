@@ -9,6 +9,9 @@ environment:
   sdk: ^3.1.1
 
 dependencies:
+  loader_overlay: ^4.0.0
+  firebase_core : ^2.30.0
+  cloud_firestore: ^4.17.0
   flutter_svg: ^2.0.5
   hexcolor: ^3.0.1
   provider: ^6.1.2

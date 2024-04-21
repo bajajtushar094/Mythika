@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';
 import './screen2.dart';
 import './otp.dart';
+import './name.dart';
 import 'package:namer_app/globals/colors.dart';
+import 'package:get/get.dart';
 
 class AppPalette {
   // Red
@@ -32,6 +35,10 @@ class _GreyColors {
 AppPalette appPalette = AppPalette();
 
 class phone_number extends StatelessWidget {
+  UserController userController = Get.put(UserController());
+  phone_number({super.key});
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -83,7 +90,8 @@ class phone_number extends StatelessWidget {
                           elevation: 5,
                           child: TextField(
                             onSubmitted: (value) {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
+                              userController.phone_number.value = value;
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => name()));
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(

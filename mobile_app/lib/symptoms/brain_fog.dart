@@ -3,12 +3,22 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/controllers/symptom_controller.dart';
+import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
+import 'package:namer_app/database/brain_fog_service.dart';
 
-class BrainFog extends StatelessWidget {
-  SymptomController symptomController = Get.put(SymptomController());
+class BrainFog extends StatefulWidget{
   BrainFog({super.key});
+  @override
+  _BrainFogState createState() => _BrainFogState();
+}
+
+class _BrainFogState extends State<BrainFog> {
+  SymptomController symptomController = Get.put(SymptomController());
+  UserController userController = Get.put(UserController());
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +119,19 @@ class BrainFog extends StatelessWidget {
                   height: 16,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    setState((){
+                      isLoading=true;
+                    });
+                    final result = await BrainFogService().addBrainFog(phone_number: userController.phone_number.value, impact: symptomController.B_impact.value, note: symptomController.B_note.value);
+
+                    if(result!="Error"){
+                      setState((){
+                        isLoading=false;
+                      });
+                    }
+
+                    },
                   child: Container(
                     height: 50,
                     width: 150,
@@ -119,10 +141,7 @@ class BrainFog extends StatelessWidget {
                       color: brightRose,
                       elevation: 5,
                       child: Center(
-                        child: Text(
-                          "Save",
-                          style: TextStyle(color: MyColors.white),
-                        ),
+                        child: isLoading? const CircularProgressIndicator(color: Colors.white,) : const Text('Submit', style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ),

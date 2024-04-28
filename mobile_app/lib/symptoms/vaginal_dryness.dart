@@ -3,12 +3,22 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/controllers/symptom_controller.dart';
+import 'package:namer_app/controllers/user_controller.dart';
+import 'package:namer_app/database/vaginal_dryness_service.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
+import 'package:namer_app/database/symptom_service.dart';
 
-class VaginalDryness extends StatelessWidget {
-  SymptomController symptomController = Get.put(SymptomController());
+class VaginalDryness extends StatefulWidget {
   VaginalDryness({super.key});
+  @override
+  _VaginalDrynessState createState() => _VaginalDrynessState();
+}
+
+class _VaginalDrynessState extends State<VaginalDryness> {
+  SymptomController symptomController = Get.put(SymptomController());
+  UserController userController = Get.put(UserController());
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +219,42 @@ class VaginalDryness extends StatelessWidget {
                   height: 16,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    final result = SymptomService().addSymptom({
+                      "mobile": userController.phone_number.value,
+                      "symptom_name": "vaginal_dryness",
+                      "symptom_fields": [
+                        {
+                          "name": "severity",
+                          "value": symptomController.V_severity.value
+                        },
+                        {
+                          "name": "sexual",
+                          "value": symptomController.V_sexual.value
+                        },
+                        {
+                          "name": "daily",
+                          "value": symptomController.V_daily.value
+                        },
+                        {
+                          "name": "frequency",
+                          "value": symptomController.V_frequency.value
+                        },
+                        {
+                          "name": "duration",
+                          "value": symptomController.V_duration.value
+                        }
+                      ]
+                    });
+
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
                   child: Container(
                     height: 50,
                     width: 150,
@@ -219,10 +264,12 @@ class VaginalDryness extends StatelessWidget {
                       color: brightRose,
                       elevation: 5,
                       child: Center(
-                        child: Text(
-                          "Save",
-                          style: TextStyle(color: MyColors.white),
-                        ),
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text('Submit',
+                                style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ),

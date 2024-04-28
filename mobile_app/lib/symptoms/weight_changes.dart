@@ -3,12 +3,22 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/controllers/symptom_controller.dart';
+import 'package:namer_app/controllers/user_controller.dart';
+import 'package:namer_app/database/symptom_service.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
-class WeightChanges extends StatelessWidget {
-  SymptomController symptomController = Get.put(SymptomController());
+class WeightChanges extends StatefulWidget {
   WeightChanges({super.key});
+
+  @override
+  _WeightChangesState createState() => _WeightChangesState();
+}
+
+class _WeightChangesState extends State<WeightChanges> {
+  SymptomController symptomController = Get.put(SymptomController());
+  UserController userController = Get.put(UserController());
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +172,38 @@ class WeightChanges extends StatelessWidget {
                   height: 16,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    final result = SymptomService().addSymptom({
+                      "mobile": userController.phone_number.value,
+                      "symptom_name": "weight_changes",
+                      "symptom_fields": [
+                        {
+                          "name": "impact",
+                          "value": symptomController.W_impact.value
+                        },
+                        {
+                          "name": "earlier",
+                          "value": symptomController.W_earlier.value
+                        },
+                        {
+                          "name": "later",
+                          "value": symptomController.W_later.value
+                        },
+                        {
+                          "name": "time",
+                          "value": symptomController.W_later.value
+                        }
+                      ]
+                    });
+
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
                   child: Container(
                     height: 50,
                     width: 150,
@@ -172,14 +213,15 @@ class WeightChanges extends StatelessWidget {
                       color: brightRose,
                       elevation: 5,
                       child: Center(
-                        child: Text(
-                          "Save",
-                          style: TextStyle(color: MyColors.white),
-                        ),
-                      ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const Text('Submit',
+                                  style: TextStyle(color: Colors.white))),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

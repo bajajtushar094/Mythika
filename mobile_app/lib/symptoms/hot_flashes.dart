@@ -3,12 +3,21 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/controllers/symptom_controller.dart';
+import 'package:namer_app/controllers/user_controller.dart';
+import 'package:namer_app/database/symptom_service.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 
-class HotFlashes extends StatelessWidget {
-  SymptomController symptomController = Get.put(SymptomController());
+class HotFlashes extends StatefulWidget {
   HotFlashes({super.key});
+  @override
+  _HotFlashesState createState() => _HotFlashesState();
+}
+
+class _HotFlashesState extends State<HotFlashes> {
+  SymptomController symptomController = Get.put(SymptomController());
+  UserController userController = Get.put(UserController());
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +193,42 @@ class HotFlashes extends StatelessWidget {
                   height: 16,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    final result = SymptomService().addSymptom({
+                      "mobile": userController.phone_number.value,
+                      "symptom_name": "hot_flashes",
+                      "symptom_fields": [
+                        {
+                          "name": "intensity",
+                          "value": symptomController.H_intensity.value
+                        },
+                        {
+                          "name": "sleep",
+                          "value": symptomController.H_sleep.value
+                        },
+                        {
+                          "name": "daily_life",
+                          "value": symptomController.H_daily.value
+                        },
+                        {
+                          "name": "frequency",
+                          "value": symptomController.H_frequency.value
+                        },
+                        {
+                          "name": "tracking",
+                          "value": symptomController.H_tracking.value
+                        }
+                      ]
+                    });
+
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
                   child: Container(
                     height: 50,
                     width: 150,
@@ -194,10 +238,12 @@ class HotFlashes extends StatelessWidget {
                       color: brightRose,
                       elevation: 5,
                       child: Center(
-                        child: Text(
-                          "Save",
-                          style: TextStyle(color: MyColors.white),
-                        ),
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text('Submit',
+                                style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ),

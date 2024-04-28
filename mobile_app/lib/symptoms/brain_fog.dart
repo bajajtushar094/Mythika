@@ -7,8 +7,9 @@ import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
 import 'package:namer_app/database/brain_fog_service.dart';
+import 'package:namer_app/database/symptom_service.dart';
 
-class BrainFog extends StatefulWidget{
+class BrainFog extends StatefulWidget {
   BrainFog({super.key});
   @override
   _BrainFogState createState() => _BrainFogState();
@@ -17,7 +18,6 @@ class BrainFog extends StatefulWidget{
 class _BrainFogState extends State<BrainFog> {
   SymptomController symptomController = Get.put(SymptomController());
   UserController userController = Get.put(UserController());
-
   bool isLoading = false;
 
   @override
@@ -120,18 +120,28 @@ class _BrainFogState extends State<BrainFog> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    setState((){
-                      isLoading=true;
+                    setState(() {
+                      isLoading = true;
                     });
-                    final result = await BrainFogService().addBrainFog(phone_number: userController.phone_number.value, impact: symptomController.B_impact.value, note: symptomController.B_note.value);
+                    final result = await SymptomService().addSymptom({
+                      "mobile": userController.phone_number.value,
+                      "symptom_name": "brain_fog",
+                      "symptom_fields": [
+                        {
+                          "name": "impact",
+                          "value": symptomController.B_impact.value
+                        },
+                        {
+                          "name": "note",
+                          "value": symptomController.B_note.value
+                        }
+                      ]
+                    });
 
-                    if(result!="Error"){
-                      setState((){
-                        isLoading=false;
-                      });
-                    }
-
-                    },
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
                   child: Container(
                     height: 50,
                     width: 150,
@@ -141,7 +151,12 @@ class _BrainFogState extends State<BrainFog> {
                       color: brightRose,
                       elevation: 5,
                       child: Center(
-                        child: isLoading? const CircularProgressIndicator(color: Colors.white,) : const Text('Submit', style: TextStyle(color: Colors.white)),
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text('Submit',
+                                style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ),

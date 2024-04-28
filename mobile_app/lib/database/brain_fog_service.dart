@@ -1,5 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:namer_app/globals/config.dart';
 
 class BrainFogService {
   Future<String?> addBrainFog(
@@ -7,13 +9,29 @@ class BrainFogService {
       required double impact,
       required String note}) async {
     try {
-      // CollectionReference brain_fog =
-      //     FirebaseFirestore.instance.collection("brain_fog");
-      //
-      // await brain_fog.doc(phone_number).set({"data":[{"impact": impact, "note": note}]});
-      DatabaseReference postListRef = FirebaseDatabase.instance.ref("posts");
-      DatabaseReference newPostRef = postListRef.push();
-      newPostRef.set({"impact": impact, "note": note});
+      Map<String, String> headers = {"Content-Type": "application/json"};
+      final response = await http.post(
+        Uri.parse(Config.SYMPTOM),
+        headers: headers,
+        body:jsonEncode(
+            {
+              "mobile": phone_number,
+              "symptom_name": "brain_fog",
+              "symptom_fields":[
+                {
+                  "name":"impact",
+                  "value":impact
+                },
+                {
+                  "name":"note",
+                  "value":note
+                }
+              ]
+            }
+        )
+      );
+
+      print("response from brain fog: "+response.toString());
 
 
       return "Brain Fog added";

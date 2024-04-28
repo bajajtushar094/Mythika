@@ -3,12 +3,21 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/controllers/symptom_controller.dart';
+import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
+import 'package:namer_app/database/symptom_service.dart';
 
-class LowEnergy extends StatelessWidget {
-  SymptomController symptomController = Get.put(SymptomController());
+class LowEnergy extends StatefulWidget {
   LowEnergy({super.key});
+  @override
+  _LowEnergyState createState() => _LowEnergyState();
+}
+
+class _LowEnergyState extends State<LowEnergy> {
+  SymptomController symptomController = Get.put(SymptomController());
+  UserController userController = Get.put(UserController());
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +83,7 @@ class LowEnergy extends StatelessWidget {
                               onChanged: (newRating) {
                                 symptomController.LE_freq.value = newRating;
                               },
-                              max: 100,
+                              max: 5,
                               min: 0,
                             );
                           }),
@@ -274,7 +283,54 @@ class LowEnergy extends StatelessWidget {
                   height: 16,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    final result = await SymptomService().addSymptom({
+                      "mobile": userController.phone_number.value,
+                      "symptom_name": "low_energy",
+                      "symptom_fields": [
+                        {
+                          "name": "frequency",
+                          "value": symptomController.LE_freq.value
+                        },
+                        {
+                          "name": "impact",
+                          "value": symptomController.LE_impact.value
+                        },
+                        {
+                          "name": "duration",
+                          "value": symptomController.LE_duration.value
+                        },
+                        {
+                          "name": "onset",
+                          "value": symptomController.LE_onset.value
+                        },
+                        {
+                          "name":"trigger",
+                          "value":symptomController.LE_trigger.value
+                        },
+                        {
+                          "name":"condition",
+                          "value":symptomController.LE_condition.value
+                        },
+                        {
+                          "name":"worst",
+                          "value":symptomController.LE_worst.value
+                        },
+                        {
+                          "name":"trigger_text",
+                          "value":symptomController.LE_text.value
+                        }
+                      ]
+                    });
+
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
                   child: Container(
                     height: 50,
                     width: 150,
@@ -284,10 +340,7 @@ class LowEnergy extends StatelessWidget {
                       color: brightRose,
                       elevation: 5,
                       child: Center(
-                        child: Text(
-                          "Save",
-                          style: TextStyle(color: MyColors.white),
-                        ),
+                        child: isLoading? const CircularProgressIndicator(color: Colors.white,) : const Text('Submit', style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ),

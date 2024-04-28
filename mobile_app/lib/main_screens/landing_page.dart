@@ -10,7 +10,7 @@ import 'package:namer_app/symptoms/night_sweats.dart';
 import 'package:namer_app/symptoms/periods.dart';
 import 'package:namer_app/symptoms/skin_rashes.dart';
 import 'package:namer_app/symptoms/vaginal_dryness.dart';
-import 'package:namer_app/symptoms/weight.dart';
+import 'package:namer_app/symptoms/weight_changes.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hexcolor/hexcolor.dart';

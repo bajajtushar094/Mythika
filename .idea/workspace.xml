@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5f4457b-959b-4b68-831e-2adf98bc2a54" name="Changes" comment="" />
+    <list default="true" id="b5f4457b-959b-4b68-831e-2adf98bc2a54" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/mobile_app/lib/globals/config.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AuthController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/model/UserModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/model/UserModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/AuthRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/AuthRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/MainRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/MainRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_app/lib/database/brain_fog_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/lib/database/brain_fog_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,6 +67,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/mobile_app/lib/globals" />
       <recent name="$PROJECT_DIR$/mobile_app/lib/Onboarding" />
       <recent name="$PROJECT_DIR$/mobile_app/assets/images" />
     </key>

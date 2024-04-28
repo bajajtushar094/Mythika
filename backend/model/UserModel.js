@@ -3,11 +3,11 @@ const {Schema, model} = require("mongoose");
 const User = Schema({
     mobile:{
         type:String,
-        requred:true
+        requred:true,
+        unqiue: true
     },
     pin:{
         type:String,
-        required:true
     },
     token:{
         type:String

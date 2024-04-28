@@ -3,12 +3,22 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/controllers/symptom_controller.dart';
+import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
+import 'package:namer_app/database/symptom_service.dart';
 
-class SkinRashes extends StatelessWidget {
-  SymptomController symptomController = Get.put(SymptomController());
+class SkinRashes extends StatefulWidget {
   SkinRashes({super.key});
+
+  @override
+  _SkinRashesState createState() => _SkinRashesState();
+}
+
+class _SkinRashesState extends State<SkinRashes> {
+  SymptomController symptomController = Get.put(SymptomController());
+  UserController userController = Get.put(UserController());
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +223,44 @@ class SkinRashes extends StatelessWidget {
                   height: 16,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    final result = SymptomService().addSymptom({
+                      "mobile": userController.phone_number.value,
+                      "symptom_name": "skin_rashes",
+                      "symptom_fields": [
+                        {
+                          "name": "well",
+                          "value": symptomController.S_well.value
+                        },
+                        {
+                          "name": "daily",
+                          "value": symptomController.S_daily.value
+                        },
+                        {
+                          "name": "duration",
+                          "value": symptomController.S_duration.value
+                        },
+                        {
+                          "name": "size",
+                          "value": symptomController.S_size.value
+                        },
+                        {
+                          "name": "loc",
+                          "value": symptomController.S_loc.value
+                        }
+                      ]
+                    });
+
+                    setState(() {
+                      isLoading = false;
+                    });
+
+
+                  },
                   child: Container(
                     height: 50,
                     width: 150,

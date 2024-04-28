@@ -3,12 +3,22 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/controllers/symptom_controller.dart';
+import 'package:namer_app/controllers/user_controller.dart';
+import 'package:namer_app/database/night_sweats_service.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main.dart';
+import 'package:namer_app/database/symptom_service.dart';
 
-class NightSweats extends StatelessWidget {
-  SymptomController symptomController = Get.put(SymptomController());
+class NightSweats extends StatefulWidget {
   NightSweats({super.key});
+  @override
+  _NightSweatsState createState() => _NightSweatsState();
+}
+
+class _NightSweatsState extends State<NightSweats> {
+  SymptomController symptomController = Get.put(SymptomController());
+  UserController userController = Get.put(UserController());
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +194,42 @@ class NightSweats extends StatelessWidget {
                   height: 16,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    final result = SymptomService().addSymptom({
+                      "mobile": userController.phone_number.value,
+                      "symptom_name": "night_sweats",
+                      "symptom_fields": [
+                        {
+                          "name": "intensity",
+                          "value": symptomController.N_intensity.value
+                        },
+                        {
+                          "name": "sleep",
+                          "value": symptomController.N_sleep.value
+                        },
+                        {
+                          "name": "daily",
+                          "value": symptomController.N_daily.value
+                        },
+                        {
+                          "name": "frequency",
+                          "value": symptomController.N_frequency.value
+                        },
+                        {
+                          "name": "tracking",
+                          "value": symptomController.N_tracking.value
+                        }
+                      ]
+                    });
+
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
                   child: Container(
                     height: 50,
                     width: 150,
@@ -194,10 +239,12 @@ class NightSweats extends StatelessWidget {
                       color: brightRose,
                       elevation: 5,
                       child: Center(
-                        child: Text(
-                          "Save",
-                          style: TextStyle(color: MyColors.white),
-                        ),
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text('Submit',
+                                style: TextStyle(color: Colors.white)),
                       ),
                     ),
                   ),

@@ -5,18 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5f4457b-959b-4b68-831e-2adf98bc2a54" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/mobile_app/lib/globals/config.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_app/lib/Onboarding/pin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_app/lib/controllers/mrs_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_app/lib/main_screens/mrs_calculator.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/AuthController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/AuthController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/model/UserModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/model/UserModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/AuthRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/AuthRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/MainRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/MainRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile_app/lib/database/brain_fog_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/lib/database/brain_fog_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile_app/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile_app/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_app/lib/Onboarding/phone_number.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/lib/Onboarding/phone_number.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_app/lib/database/symptom_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/lib/database/symptom_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_app/lib/database/user_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/lib/database/user_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_app/lib/main_screens/landing_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/lib/main_screens/landing_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_app/lib/symptoms/weight_changes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_app/lib/symptoms/weight_changes.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

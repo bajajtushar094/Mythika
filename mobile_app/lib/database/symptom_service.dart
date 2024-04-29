@@ -6,10 +6,9 @@ import 'package:namer_app/globals/config.dart';
 class SymptomService{
   Future<String?> addSymptom(final payload) async {
     try{
-      Map<String, String> headers = {"Content-Type": "application/json"};
       final response = await http.post(
           Uri.parse(Config.SYMPTOM),
-          headers: headers,
+          headers: Config.headers,
           body:jsonEncode(
               payload
           )

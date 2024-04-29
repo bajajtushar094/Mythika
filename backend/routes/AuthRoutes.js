@@ -5,6 +5,7 @@ const AuthController = require("../controllers/AuthController");
 const router = express.Router();
 
 router.post("", AuthController.register);
+router.get("/:mobile", AuthController.checkUser);
 router.post("/login", AuthController.login);
 router.get("/welcome", (req, res) => {
     res.status(200).send("Welcome!");

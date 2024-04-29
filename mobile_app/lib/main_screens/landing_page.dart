@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:namer_app/main_screens/mrs_calculator.dart';
 import 'package:namer_app/symptoms/brain_fog.dart';
 import 'package:namer_app/symptoms/hot_flashes.dart';
 import 'package:namer_app/symptoms/joint_discomfort.dart';
@@ -18,6 +19,7 @@ import "../components/calendar_card.dart";
 import "../components/emoji_card.dart";
 import "../components/text_card.dart";
 import 'package:namer_app/globals/colors.dart';
+import 'package:namer_app/main_screens/landing_page.dart';
 
 class AppPalette {
   // Red
@@ -260,6 +262,90 @@ class landing_page extends StatelessWidget {
                                                     ),
                                                   ),
                                                 ))
+                                          ],
+                                        )))),
+                            Container(
+                                margin: const EdgeInsets.only(top: 10.0),
+                                child: Card(
+                                    color: appPalette.offWhite,
+                                    child: SizedBox(
+                                        height: 130,
+                                        width: 350,
+                                        child: Column(
+                                          children: <Widget>[
+                                            Row(children: [
+                                              Container(
+                                                  child: Padding(
+                                                      padding:
+                                                      const EdgeInsets.only(
+                                                          top: 25.0,
+                                                          bottom: 5.0,
+                                                          left: 25.0),
+                                                      child: Text(
+                                                          'Menopause Rating Scale',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color: appPalette
+                                                                  .black))))
+                                            ]),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: 250,
+                                                  height: 50,
+                                                  margin: EdgeInsets.only(
+                                                      left: 30.0),
+                                                  child: TextButton(
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                            appPalette
+                                                                .orangeDew),
+                                                        foregroundColor:
+                                                        MaterialStateProperty
+                                                            .all<Color>(
+                                                            appPalette
+                                                                .brightRose),
+                                                      ),
+                                                      onPressed: () {
+                                                        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen1()));
+                                                        Get.to(MRSCalculator());
+                                                      },
+                                                      child: RichText(
+                                                        text: TextSpan(
+                                                          style: TextStyle(
+                                                              color: appPalette
+                                                                  .brightRose,
+                                                              fontSize: 18,
+                                                              decoration:
+                                                              TextDecoration
+                                                                  .none,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .w600),
+                                                          children: [
+                                                            TextSpan(
+                                                                text:
+                                                                'MRS Calculator'),
+                                                            WidgetSpan(
+                                                              child: Padding(
+                                                                padding: const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                    2.0),
+                                                                child: Icon(Icons
+                                                                    .calculate),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    //Text('TextButton' , style: TextStyle(color: appPalette.brightRose, fontSize: 18, decoration: TextDecoration.none)),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
                                           ],
                                         )))),
                             Container(

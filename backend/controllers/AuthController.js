@@ -40,6 +40,24 @@ exports.register = async (req, res) => {
     }
 }
 
+exports.checkUser = async (req, res) => {
+    try{
+        const mobile = req.params.mobile;
+        console.log(mobile);
+
+        const user = await User.findOne({mobile});
+
+        if(user==null){
+            return apiResponse.successResponse(req, res, false);
+        }
+
+        return apiResponse.successResponse(req, res, true);
+    }
+    catch(error){
+        return apiResponse.errorResponse(res, res, error.message);
+    }
+}
+
 exports.login = async (req, res) => {
     try{
         const {mobile, pin} = req.body;

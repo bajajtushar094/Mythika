@@ -11,6 +11,7 @@ import './otp.dart';
 import './name.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:get/get.dart';
+import 'package:namer_app/database/user_service.dart';
 
 class AppPalette {
   // Red
@@ -89,8 +90,13 @@ class phone_number extends StatelessWidget {
                           color: MyColors.cherryBlossomLight,
                           elevation: 5,
                           child: TextField(
-                            onSubmitted: (value) {
+                            onSubmitted: (value) async {
                               userController.phone_number.value = value;
+                              final response = await UserService().checkUserExists(phone_number: value);
+                              print("response from inside onboarding: "+ response.toString());
+                              if(response==true){
+                                print("reached here!");
+                              }
                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => name()));
                             },
                             keyboardType: TextInputType.number,

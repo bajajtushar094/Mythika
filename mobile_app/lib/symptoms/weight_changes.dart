@@ -160,8 +160,10 @@ class _WeightChangesState extends State<WeightChanges> {
                               onChanged: (newRating) {
                                 symptomController.W_impact.value = newRating;
                               },
-                              max: 100,
+                              max: 4,
                               min: 0,
+                              divisions: 4,
+                              label:symptomController.W_impact.value.toString()
                             );
                           }),
                           belowSlider("a lot")

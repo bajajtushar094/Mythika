@@ -34,7 +34,7 @@ AppPalette appPalette = AppPalette();
 class otp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(

@@ -42,7 +42,7 @@ class phone_number extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -92,12 +92,12 @@ class phone_number extends StatelessWidget {
                           child: TextField(
                             onSubmitted: (value) async {
                               userController.phone_number.value = value;
-                              final response = await UserService().checkUserExists(phone_number: value);
-                              print("response from inside onboarding: "+ response.toString());
-                              if(response==true){
-                                print("reached here!");
-                              }
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => name()));
+                              // final response = await UserService().checkUserExists(phone_number: value);
+                              // print("response from inside onboarding: "+ response.toString());
+                              // if(response==true){
+                              //   print("reached here!");
+                              // }
+                              Get.to(otp());
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(

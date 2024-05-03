@@ -9,6 +9,9 @@ const User = Schema({
     pin:{
         type:String,
     },
+    name:{
+        type: String,
+    },
     token:{
         type:String
     },
@@ -33,8 +36,9 @@ const User = Schema({
     night_sweats:[{
         type:Object
     }],
-    
-
+    mrs_score:[{
+        type: Object
+    }]
 });
 
 module.exports = model("user", User);

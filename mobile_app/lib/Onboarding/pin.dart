@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/Onboarding/safe_space.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:hexcolor/hexcolor.dart';
 import './screen2.dart';
 import './name.dart';
 import 'package:namer_app/globals/colors.dart';
+import 'package:get/get.dart';
 
 class AppPalette {
   // Red
@@ -34,7 +36,7 @@ AppPalette appPalette = AppPalette();
 class Pin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -153,7 +155,7 @@ class Pin extends StatelessWidget {
                               elevation: 5,
                               child: TextField(
                                 onSubmitted: (value) {
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => name()));
+                                  Get.to(SafeSpace());
                                 },
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(

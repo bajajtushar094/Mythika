@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/Onboarding/age.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
@@ -43,7 +44,7 @@ class name extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoaderOverlay(
-        child: new Scaffold(
+        child: Scaffold(
             body: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -79,16 +80,16 @@ class name extends StatelessWidget {
                               child: TextField(
                                 onSubmitted: (value) async {
                                   userController.name.value = value;
-                                  context.loaderOverlay.show();
-                                  final result = await UserService().addUser(
-                                      name: userController.name.value,
-                                      phone_number: userController.phone_number.value
-                                  );
-                                  context.loaderOverlay.hide();
-                                  print("results from adding user: "+result.toString());
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
+                                  // context.loaderOverlay.show();
+                                  // final result = await UserService().addUser(
+                                  //     name: userController.name.value,
+                                  //     phone_number: userController.phone_number.value
+                                  // );
+                                  // context.loaderOverlay.hide();
+                                  // print("results from adding user: "+result.toString());
+                                  Get.to(Age());
                                 },
-                                keyboardType: TextInputType.number,
+                                keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintStyle: TextStyle(

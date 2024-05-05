@@ -14,4 +14,5 @@ class MyColors {
   static Color grey100 = const Color(0xFFF5F5F5);
   static Color grey300 = HexColor("#7d7d7d");
   static Color offWhite = HexColor("FFFFF0");
+  static Color notificationGreen = HexColor("0EB00B");
 }

@@ -84,23 +84,28 @@ class SafeSpace extends StatelessWidget {
                       height: height*0.12,
                       margin: const EdgeInsets.only(left: 20.0, right: 20.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Card(
-                              color: MyColors.purpleMint,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
-                              child: Container(
-                                height: width*0.12,
-                                width: width*0.12,
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 2.0),
-                                  child: Icon(Icons.arrow_back_rounded, color: MyColors.white, size: 30),
-                                ),
-                              )),
+                          // GestureDetector(
+                          //   onTap: (){
+                          //     Get.back();
+                          //   },
+                          //   child: Card(
+                          //       color: MyColors.purpleMint,
+                          //       shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(50.0),
+                          //       ),
+                          //       child: Container(
+                          //         height: width*0.12,
+                          //         width: width*0.12,
+                          //         child: Padding(
+                          //           padding:
+                          //           const EdgeInsets.symmetric(horizontal: 2.0),
+                          //           child: Icon(Icons.arrow_back_rounded, color: MyColors.white, size: 30),
+                          //         ),
+                          //       )),
+                          // ),
                           Stack(
                             children: <Widget>[
                               Container(

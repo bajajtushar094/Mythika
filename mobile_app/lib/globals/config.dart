@@ -5,5 +5,6 @@ class Config{
   static String REGISTER = '$LOCAL_SERVER_URL/auth';
   static String LOGIN = '$LOCAL_SERVER_URL/auth/login';
   static String SYMPTOM = '$LOCAL_SERVER_URL/symptom';
+  static String QUESTION = '$LOCAL_SERVER_URL/questionaire';
   static Map<String, String> headers = {"Content-Type": "application/json"};
 }

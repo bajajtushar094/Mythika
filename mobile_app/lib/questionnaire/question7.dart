@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/questionnaire/question1_no.dart';
 import 'package:namer_app/questionnaire/question1_yes.dart';
@@ -51,10 +52,12 @@ class Question7 extends StatefulWidget {
 class _Question7State extends State<Question7> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
-  String _selected = "";
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
+  Set<String> _answers = {};
+  List<String> symptoms = ["Diabetes", "Thyroid issues", "Low BP", "High BP", "Others"];
   @override
   void initState() {
-    _selected = "";
+    _answers = {};
     super.initState();
   }
 
@@ -74,7 +77,7 @@ class _Question7State extends State<Question7> {
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
                           width: 375,
@@ -122,42 +125,26 @@ class _Question7State extends State<Question7> {
                           width: 350,
                           child: Column(
                             children: <Widget>[
-                              Row(
+                              Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                // alignment: WrapAlignment.spaceBetween,
                                 children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        Get.to(LowEnergy());
-                                      },
-                                      child:
-                                      text_card({"text": "Diabetes"})),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Thyroid issues"}),
-                                  ),
+                                  for(var symptom in symptoms)
+                                    GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            if(_answers.contains(symptom)){
+                                              _answers.remove(symptom);
+                                            }
+                                            else{
+                                              _answers.add(symptom);
+                                            }
+                                          });
+                                        },
+                                        child:
+                                        text_card({"text": symptom, "selected":_answers.contains(symptom)})),
                                 ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Low BP"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card(
-                                        {"text": "High BP"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card(
-                                        {"text": "Others"}),
-                                  ),
-                                ],
-                              ),
+                              )
                             ],
                           )),
                       Container(
@@ -197,6 +184,11 @@ class _Question7State extends State<Question7> {
                                       alignment: Alignment.center,
                                       child: GestureDetector(
                                         onTap: () {
+                                          questionnaireController.questions[7]= {
+                                            "question_number":"7",
+                                            "question":"i_also_have",
+                                            "question_answer":_answers.toList()
+                                          };
                                           Get.to(landing_page());
                                         },
                                         child: Card(

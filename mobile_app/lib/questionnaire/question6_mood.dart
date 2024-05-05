@@ -14,6 +14,7 @@ import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 
 class AppPalette {
   // Red
@@ -52,10 +53,14 @@ class Question6Mood extends StatefulWidget {
 class _Question6MoodState extends State<Question6Mood> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
   String _selected = "";
+  List<String> symptoms = ["Mood swings", "Crying spells", "Helplessness", "Loss of libido", "Anxiety", "Lethargy", "Stress", "Irritability", "Palpitations", "Sleep disturbances", "Insomnia", "Difficulty in concentration", "Memory loss"];
+  Set<String> _answers={};
   @override
   void initState() {
     _selected = "";
+    _answers={};
     super.initState();
   }
 
@@ -124,89 +129,27 @@ class _Question6MoodState extends State<Question6Mood> {
                       SizedBox(
                           width: 350,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Row(
+                              Wrap(
+                               crossAxisAlignment : WrapCrossAlignment.start,
+                                // alignment: WrapAlignment.spaceBetween,
                                 children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        Get.to(LowEnergy());
-                                      },
-                                      child:
-                                      text_card({"text": "Mood swings"})),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Crying spells"}),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Helplessness"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card(
-                                        {"text": "Loss of libido"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card(
-                                        {"text": "Anxiety"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Lethargy"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Stress"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Irritability"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Palpitations"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Sleep disturbances"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Insomnia"}),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Memory loss"}),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Difficulty in concentration"}),
-                                  ),
+                                  for(var symptom in symptoms)
+                                    GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            if(_answers.contains(symptom)){
+                                              _answers.remove(symptom);
+                                            }
+                                            else{
+                                              _answers.add(symptom);
+                                            }
+                                          });
+                                        },
+                                        child:
+                                        text_card({"text": symptom, "selected":_answers.contains(symptom)})),
                                 ],
                               )
                             ],
@@ -245,6 +188,11 @@ class _Question6MoodState extends State<Question6Mood> {
                                       alignment: Alignment.center,
                                       child: GestureDetector(
                                         onTap: () {
+                                          questionnaireController.questions[6.2]= {
+                                            "question_number":"6.2",
+                                            "question":"i_struggle_with_following_moods",
+                                            "question_answer":_answers.toList()
+                                          };
                                           Get.to(Question7());
                                         },
                                         child: Card(

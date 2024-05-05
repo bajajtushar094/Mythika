@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/controllers/user_controller.dart';
@@ -12,6 +13,9 @@ import './name.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:get/get.dart';
 import 'package:namer_app/database/user_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:namer_app/Onboarding/safe_space.dart';
+import 'package:namer_app/Onboarding/pin.dart';
 
 class AppPalette {
   // Red
@@ -92,12 +96,23 @@ class phone_number extends StatelessWidget {
                           child: TextField(
                             onSubmitted: (value) async {
                               userController.phone_number.value = value;
-                              // final response = await UserService().checkUserExists(phone_number: value);
-                              // print("response from inside onboarding: "+ response.toString());
-                              // if(response==true){
-                              //   print("reached here!");
-                              // }
-                              Get.to(otp());
+                              final result = await UserService().checkUserExists(phone_number: userController.phone_number.value);
+                              print("result from check User: "+ result.toString());
+                              if(json.decode(result.toString())['success']){
+                                Fluttertoast.showToast(
+                                  msg: json.decode(result.toString())['message'],
+                                  backgroundColor: MyColors.notificationGreen,
+                                );
+                                Get.to(Pin());
+                              }
+                              else{
+                                Fluttertoast.showToast(
+                                  msg: json.decode(result.toString())['message'],
+                                  backgroundColor: MyColors.brightRose,
+                                );
+                                Get.to(otp());
+                              }
+                              // Get.to(otp());
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(

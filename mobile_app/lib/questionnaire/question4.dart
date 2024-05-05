@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
@@ -36,10 +37,25 @@ class _GreyColors {
 
 AppPalette appPalette = AppPalette();
 
-class Question4 extends StatelessWidget {
+class Question4 extends StatefulWidget{
+  Question4({super.key});
+
+  @override
+  _Question4State createState() => _Question4State();
+}
+
+class _Question4State extends State<Question4> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
-  Question4({super.key});
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
+  String _answer = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _answer="";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +99,15 @@ class Question4 extends StatelessWidget {
                             itemExtent: 40,
                             diameterRatio: 8,
                             children: [
-                              listViewContainer("1 day", 0),
-                              listViewContainer("2 days", 1),
-                              listViewContainer("3 days", 2),
-                              listViewContainer("4 days", 3),
-                              listViewContainer("5 days", 4),
-                              listViewContainer("6 days", 5),
-                              listViewContainer("1 week", 6),
-                              listViewContainer("2 week", 7),
+                              listViewContainer("1 day", 1),
+                              listViewContainer("2 days", 2),
+                              listViewContainer("3 days", 3),
+                              listViewContainer("4 days", 4),
+                              listViewContainer("5 days", 5),
+                              listViewContainer("6 days", 6)
                             ],
                             onSelectedItemChanged: (index) {
-                              symptomController.LE_duration.value = index;
+                              symptomController.LE_duration.value = index+1;
                             },
                           ),
                         );
@@ -132,6 +146,11 @@ class Question4 extends StatelessWidget {
                                     alignment: Alignment.center,
                                     child: GestureDetector(
                                       onTap:() {
+                                        questionnaireController.questions[4]= {
+                                          "question_number":"4",
+                                          "question":"my_period_lasts_for_around",
+                                          "question_answer":_answer
+                                        };
                                         Get.to(Question5());
                                       },
                                       child: Card(

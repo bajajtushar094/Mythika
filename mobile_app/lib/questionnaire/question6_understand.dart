@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/questionnaire/question1_no.dart';
 import 'package:namer_app/questionnaire/question1_yes.dart';
@@ -55,10 +56,17 @@ class Question6Understand extends StatefulWidget{
 class _Question6UnderstandState extends State<Question6Understand> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
   String _selected="";
+  Set<String> _subanswers = {};
+  List<String> diet_symptoms = ["Sugar", "Caffeine", "Spicy food", "Processed food", "Alcohol"];
+  List<String> sleep_symptoms = ["Mid-day nap", "Disturbed sleep", "Irregular sleep schedule"];
+  List<String> physical_activity_symptoms = ["No exercise", "Intense exercise"];
+  List<String> socialization_symptoms = ["Social isolation", "Social anxiety", "Relationship stress"];
   @override
   void initState() {
     _selected = "";
+    _subanswers = {};
     super.initState();
   }
 
@@ -134,7 +142,10 @@ class _Question6UnderstandState extends State<Question6Understand> {
                                       if(_selected!="diet"){
                                         value="diet";
                                       }
-                                      setState(() => _selected = value);
+                                      setState(() {
+                                        _selected = value;
+                                        _subanswers = {};
+                                      });
                                     },
                                     child: Card(
                                         color: _selected=="diet"?MyColors.orangeDew:MyColors.offWhite,
@@ -156,54 +167,29 @@ class _Question6UnderstandState extends State<Question6Understand> {
                         SizedBox(
                             width: width*0.95,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Row(
+                                Wrap(
+                                  crossAxisAlignment : WrapCrossAlignment.start,
                                   children: [
-                                    GestureDetector(
-                                        onTap: () {
-                                        },
-                                        child: text_card({
-                                          "text": "Sugar"
-                                        })),
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card(
-                                          {"text": "Caffeine"}),
-                                    ),
+                                    for(var symptom in diet_symptoms)
+                                      GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              if(_subanswers.contains(symptom)){
+                                                _subanswers.remove(symptom);
+                                              }
+                                              else{
+                                                _subanswers.add(symptom);
+                                              }
+                                            });
+                                          },
+                                          child:
+                                          text_card({"text": symptom, "selected":_subanswers.contains(symptom)})),
                                   ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "Spicy food"
-                                      }),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "Process food"
-                                      }),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "Alcohol"
-                                      }),
-                                    ),
-                                  ],
-                                ),
+                                )
+
                               ],
                             )),
                       Row(// ROW 3
@@ -218,7 +204,10 @@ class _Question6UnderstandState extends State<Question6Understand> {
                                       if(_selected!="sleep"){
                                         value="sleep";
                                       }
-                                      setState(() => _selected = value);
+                                      setState(() {
+                                        _selected = value;
+                                        _subanswers = {};
+                                      });
                                     },
                                     child: Card(
                                         color: _selected=="sleep"?MyColors.orangeDew:MyColors.offWhite,
@@ -243,34 +232,26 @@ class _Question6UnderstandState extends State<Question6Understand> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                Row(
+                                Wrap(
+                                  crossAxisAlignment : WrapCrossAlignment.start,
                                   children: [
-                                    GestureDetector(
-                                        onTap: () {
-                                          Get.to(LowEnergy());
-                                        },
-                                        child: text_card({
-                                          "text": "Mid-day nap"
-                                        })),
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card(
-                                          {"text": "Disturbed sleep"}),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "Irregular sleep schedule"
-                                      }),
-                                    ),
+                                    for(var symptom in sleep_symptoms)
+                                      GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              if(_subanswers.contains(symptom)){
+                                                _subanswers.remove(symptom);
+                                              }
+                                              else{
+                                                _subanswers.add(symptom);
+                                              }
+                                            });
+                                          },
+                                          child:
+                                          text_card({"text": symptom, "selected":_subanswers.contains(symptom)})),
                                   ],
                                 )
+
                               ],
                             )),
                       Row(// ROW 3
@@ -285,7 +266,11 @@ class _Question6UnderstandState extends State<Question6Understand> {
                                       if(_selected!="physical_activity"){
                                         value="physical_activity";
                                       }
-                                      setState(() => _selected = value);
+                                      setState(() {
+                                        _subanswers = {};
+                                        _selected = value;
+
+                                      });
                                     },
                                     child: Card(
                                         color: _selected=="physical_activity"?MyColors.orangeDew:MyColors.offWhite,
@@ -307,26 +292,28 @@ class _Question6UnderstandState extends State<Question6Understand> {
                         SizedBox(
                             width: width*0.95,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Row(
+                                Wrap(
+                                  crossAxisAlignment : WrapCrossAlignment.start,
                                   children: [
-                                    GestureDetector(
-                                        onTap: () {
-                                          Get.to(LowEnergy());
-                                        },
-                                        child: text_card({
-                                          "text": "No exercise"
-                                        })),
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card(
-                                          {"text": "Intense Exercise"}),
-                                    ),
+                                    for(var symptom in physical_activity_symptoms)
+                                      GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              if(_subanswers.contains(symptom)){
+                                                _subanswers.remove(symptom);
+                                              }
+                                              else{
+                                                _subanswers.add(symptom);
+                                              }
+                                            });
+                                          },
+                                          child:
+                                          text_card({"text": symptom, "selected":_subanswers.contains(symptom)})),
                                   ],
-                                ),
+                                )
                               ],
                             )),
                       Row(// ROW 3
@@ -341,7 +328,10 @@ class _Question6UnderstandState extends State<Question6Understand> {
                                       if(_selected!="socialization"){
                                         value="socialization";
                                       }
-                                      setState(() => _selected = value);
+                                      setState(() {
+                                        _subanswers = {};
+                                        _selected = value;
+                                      } );
                                     },
                                     child: Card(
                                         color: _selected=="socialization"?MyColors.orangeDew:MyColors.offWhite,
@@ -361,39 +351,30 @@ class _Question6UnderstandState extends State<Question6Understand> {
                           ]),
                       if(_selected=="socialization")
                         SizedBox(
-                            width: width*0.95,
+                            width: 350,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Row(
+                                Wrap(
+                                  crossAxisAlignment : WrapCrossAlignment.start,
                                   children: [
-                                    GestureDetector(
-                                        onTap: () {
-                                          Get.to(LowEnergy());
-                                        },
-                                        child: text_card({
-                                          "text": "Social isolation"
-                                        })),
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card(
-                                          {"text": "Social anxiety"}),
-                                    ),
+                                    for(var symptom in socialization_symptoms)
+                                      GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              if(_subanswers.contains(symptom)){
+                                                _subanswers.remove(symptom);
+                                              }
+                                              else{
+                                                _subanswers.add(symptom);
+                                              }
+                                            });
+                                          },
+                                          child:
+                                          text_card({"text": symptom, "selected":_subanswers.contains(symptom)})),
                                   ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                        onTap: () {
-                                          Get.to(LowEnergy());
-                                        },
-                                        child: text_card({
-                                          "text": "Relationship stress"
-                                        })),
-                                  ],
-                                ),
+                                )
                               ],
                             )),
                       SizedBox(
@@ -431,6 +412,12 @@ class _Question6UnderstandState extends State<Question6Understand> {
                                       alignment: Alignment.center,
                                       child: GestureDetector(
                                         onTap:() {
+                                          questionnaireController.questions[6.2]= {
+                                            "question_number":"6.2",
+                                            "question":"i_struggle_with_following_moods",
+                                            "question_answer":_selected,
+                                            "question_subanswers":_subanswers.toList()
+                                          };
                                           Get.to(Question7());
                                         },
                                         child: Card(

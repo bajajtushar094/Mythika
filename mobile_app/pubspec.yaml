@@ -9,6 +9,7 @@ environment:
   sdk: ^3.1.1
 
 dependencies:
+  fluttertoast: ^8.1.1
   loader_overlay: ^4.0.0
   firebase_core : ^2.30.0
   cloud_firestore: ^4.17.0

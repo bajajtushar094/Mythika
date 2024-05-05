@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
@@ -35,10 +36,25 @@ class _GreyColors {
 
 AppPalette appPalette = AppPalette();
 
-class Question2 extends StatelessWidget {
+class Question2 extends StatefulWidget{
+  Question2({super.key});
+
+  @override
+  _Question2State createState() => _Question2State();
+}
+
+class _Question2State extends State<Question2> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
-  Question2({super.key});
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
+  int _answer = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _answer = 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,28 +93,22 @@ class Question2 extends StatelessWidget {
                         )),
                     Container(
                       margin: const EdgeInsets.only(left: 20, right: 20),
-                      child: Obx(() {
-                        return SizedBox(
+                      child: SizedBox(
                           height: 200,
                           child: ListWheelScrollView(
                             itemExtent: 40,
                             diameterRatio: 8,
                             children: [
-                              listViewContainer("1 day", 0),
-                              listViewContainer("2 days", 1),
-                              listViewContainer("3 days", 2),
-                              listViewContainer("4 days", 3),
-                              listViewContainer("5 days", 4),
-                              listViewContainer("6 days", 5),
-                              listViewContainer("1 week", 6),
-                              listViewContainer("2 week", 7),
+                              for(var i=5;i<=20;i++)
+                                listViewContainer('${i}', i),
                             ],
                             onSelectedItemChanged: (index) {
-                              symptomController.LE_duration.value = index;
+                              setState(() {
+                                _answer = index+5;
+                              });
                             },
                           ),
-                        );
-                      }),
+                        )
                     ),
                     SizedBox(height: 50),
                     Container(
@@ -133,6 +143,11 @@ class Question2 extends StatelessWidget {
                                     alignment: Alignment.center,
                                     child: GestureDetector(
                                       onTap:() {
+                                        questionnaireController.questions[2]= {
+                                          "question_number":"2",
+                                          "question":"age_when_i_got_my_first_period",
+                                          "question_answer":_answer
+                                        };
                                         Get.to(Question3());
                                       },
                                       child: Card(
@@ -172,14 +187,14 @@ class Question2 extends StatelessWidget {
       width: double.maxFinite,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: symptomController.LE_duration.value == i ? MyColors.white : null,
+        color: _answer == i ? MyColors.white : null,
       ),
       child: Center(
         child: Text(
           text,
           style: TextStyle(
               fontSize: 20,
-              color: symptomController.LE_duration.value == i
+              color: _answer == i
                   ? MyColors.black
                   : MyColors.grey300),
         ),

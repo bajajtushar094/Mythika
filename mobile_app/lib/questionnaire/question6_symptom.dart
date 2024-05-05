@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/questionnaire/question1_no.dart';
 import 'package:namer_app/questionnaire/question1_yes.dart';
@@ -15,34 +16,6 @@ import 'package:namer_app/controllers/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:namer_app/components/text_card.dart';
 
-class AppPalette {
-  // Red
-  Color brightRose = HexColor("#DA2942");
-  Color orangeDew = HexColor("#FFBE71");
-  Color purpleMint = HexColor("#B75CEE");
-  Color black = HexColor("#000000");
-  Color offWhite = HexColor("#FFFFF0");
-  Color cherryBlossomLight = HexColor("#FFEFF1");
-  Color white = HexColor("#FFFFFF");
-  Color lightGrey = HexColor("#B9B9B9");
-  static const imperialRed = Color(0xFFE54B4B);
-
-  // White
-  static const seashell = Color(0xFFF7EBE8);
-
-  // Grey
-  static const grey = _GreyColors();
-}
-
-class _GreyColors {
-  const _GreyColors();
-
-  final grey50 = const Color(0xFFFAFAFA);
-  final grey100 = const Color(0xFFF5F5F5);
-}
-
-AppPalette appPalette = AppPalette();
-
 class Question6Symptom extends StatefulWidget {
   Question6Symptom({super.key});
   @override
@@ -52,10 +25,12 @@ class Question6Symptom extends StatefulWidget {
 class _Question6SymptomState extends State<Question6Symptom> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
-  String _selected = "";
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
+  Set<String> _answers = {};
+  List<String> symptoms = ["Hot Flashes", "Night Sweats", "Palpitations", "Irregular periods", "Abnormal uterine bleeding", "UTI", "Joint pain", "Headache", "Dry skin", "Migraine", "Vertigo", "Chest pain", "Bloating", "Cramps", "Bone loss", "Nausea", "Dry vagina", "Indigestion", "Weight gain", "Hair issues", "Fear of cancer"];
   @override
   void initState() {
-    _selected = "";
+    _answers = {};
     super.initState();
   }
 
@@ -111,7 +86,7 @@ class _Question6SymptomState extends State<Question6Symptom> {
                           children: [
                             Text('I struggle with',
                                 style: TextStyle(
-                                    color: appPalette.brightRose,
+                                    color: MyColors.brightRose,
                                     fontSize: 20,
                                     decoration: TextDecoration.none,
                                     fontWeight: FontWeight.w500)),
@@ -119,135 +94,28 @@ class _Question6SymptomState extends State<Question6Symptom> {
                       SizedBox(
                           width: 350,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Row(
+                              Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                // alignment: WrapAlignment.spaceBetween,
                                 children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        Get.to(LowEnergy());
-                                      },
-                                      child:
-                                          text_card({"text": "Hot Flashes"})),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Night Sweats"}),
-                                  ),
+                                  for(var symptom in symptoms)
+                                    GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            if(_answers.contains(symptom)){
+                                              _answers.remove(symptom);
+                                            }
+                                            else{
+                                              _answers.add(symptom);
+                                            }
+                                          });
+                                        },
+                                        child:
+                                        text_card({"text": symptom, "selected":_answers.contains(symptom)})),
                                 ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Palpitations"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card(
-                                        {"text": "Irregular periods"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card(
-                                        {"text": "Abnormal uterine bleeding"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "UTI"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Joint pain"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Headache"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Dry Skin"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Migraine"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Vertigo"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Chest pain"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Bloating"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Cramps"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Bone loss"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Nausea"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Dry vagina"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Indigestion"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Weight gain"}),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Hair issues"}),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: text_card({"text": "Fear of cancer"}),
-                                  ),
-                                ],
-                              ),
+                              )
                             ],
                           )),
                       Container(
@@ -284,6 +152,11 @@ class _Question6SymptomState extends State<Question6Symptom> {
                                       alignment: Alignment.center,
                                       child: GestureDetector(
                                         onTap: () {
+                                          questionnaireController.questions[6.1]= {
+                                            "question_number":"6.1",
+                                            "question":"i_struggle_with_following_symptoms",
+                                            "question_answer":_answers.toList()
+                                          };
                                           Get.to(Question7());
                                         },
                                         child: Card(

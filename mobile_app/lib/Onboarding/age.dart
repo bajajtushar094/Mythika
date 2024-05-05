@@ -37,10 +37,23 @@ class _GreyColors {
 
 AppPalette appPalette = AppPalette();
 
-class Age extends StatelessWidget {
+class Age extends StatefulWidget {
+  Age({super.key});
+
+  @override
+  _AgeState createState() => _AgeState();
+}
+
+class _AgeState extends State<Age> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
-  Age({super.key});
+
+  int _age=45;
+  @override
+  void initState() {
+    _age = 45;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,17 +114,12 @@ class Age extends StatelessWidget {
                             itemExtent: 40,
                             diameterRatio: 8,
                             children: [
-                              listViewContainer("1 day", 0),
-                              listViewContainer("2 days", 1),
-                              listViewContainer("3 days", 2),
-                              listViewContainer("4 days", 3),
-                              listViewContainer("5 days", 4),
-                              listViewContainer("6 days", 5),
-                              listViewContainer("1 week", 6),
-                              listViewContainer("2 week", 7),
+                              for(var i=35;i<=60;i++)
+                              listViewContainer('${i}', i),
                             ],
                             onSelectedItemChanged: (index) {
-                              symptomController.LE_duration.value = index;
+                              print("value: "+ index.toString());
+                              userController.age.value = index+35;
                             },
                           ),
                         );
@@ -184,14 +192,14 @@ class Age extends StatelessWidget {
       width: double.maxFinite,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: symptomController.LE_duration.value == i ? MyColors.white : null,
+        color: userController.age.value == i ? MyColors.white : null,
       ),
       child: Center(
         child: Text(
           text,
           style: TextStyle(
               fontSize: 20,
-              color: symptomController.LE_duration.value == i
+              color: userController.age.value == i
                   ? MyColors.black
                   : MyColors.grey300),
         ),

@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
@@ -35,17 +36,34 @@ class _GreyColors {
 
 AppPalette appPalette = AppPalette();
 
-class Question3 extends StatelessWidget {
+class Question3 extends StatefulWidget {
+  Question3({super.key});
+
+  @override
+  _Question3State createState() => _Question3State();
+}
+
+class _Question3State extends State<Question3> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
-  Question3({super.key});
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
+  int _date = 0;
+  int _month = 0;
+  int _year = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _date = 1;
+    _month = 1;
+    _year = 2013;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     int width = MediaQuery.of(context).size.width.floor();
     int height = MediaQuery.of(context).size.height.floor();
-    print("height: "+height.ceil().toString());
-    print("width: "+width.toString());
     return Scaffold(
         body: Container(
             decoration: BoxDecoration(
@@ -79,75 +97,67 @@ class Question3 extends StatelessWidget {
                       margin: const EdgeInsets.only(left: 20, right: 20),
                       child: Row(
                         children: [
-                          Obx(() {
-                            return SizedBox(
+                          SizedBox(
                               height: 200,
                               width:50,
                               child: ListWheelScrollView(
                                 itemExtent: 40,
                                 diameterRatio: 8,
                                 children: [
-                                  listViewContainer("1", 0),
-                                  listViewContainer("2", 1),
-                                  listViewContainer("3", 2),
-                                  listViewContainer("4", 3),
-                                  listViewContainer("5", 4),
-                                  listViewContainer("6", 5),
-                                  listViewContainer("7", 6),
-                                  listViewContainer("8", 7),
+                                  for(var i=1;i<=31;i++)
+                                    dateListViewContainer('${i}', i),
                                 ],
                                 onSelectedItemChanged: (index) {
-                                  symptomController.LE_duration.value = index;
+                                  setState(() {
+                                    _date = index+1;
+                                  });
                                 },
                               ),
-                            );
-                          }),
-                          Obx(() {
-                            return SizedBox(
+                            ),
+                          SizedBox(
                               height: 200,
                               width:200,
                               child: ListWheelScrollView(
                                 itemExtent: 40,
                                 diameterRatio: 8,
                                 children: [
-                                  listViewContainer("January", 0),
-                                  listViewContainer("February", 1),
-                                  listViewContainer("March", 2),
-                                  listViewContainer("April", 3),
-                                  listViewContainer("May", 4),
-                                  listViewContainer("June", 5),
-                                  listViewContainer("July", 6),
-                                  listViewContainer("August", 7),
+                                  monthListViewContainer("January", 1),
+                                  monthListViewContainer("February", 2),
+                                  monthListViewContainer("March", 3),
+                                  monthListViewContainer("April", 4),
+                                  monthListViewContainer("May", 5),
+                                  monthListViewContainer("June", 6),
+                                  monthListViewContainer("July", 7),
+                                  monthListViewContainer("August", 8),
+                                  monthListViewContainer("September", 9),
+                                  monthListViewContainer("October", 10),
+                                  monthListViewContainer("November", 11),
+                                  monthListViewContainer("December", 12),
                                 ],
                                 onSelectedItemChanged: (index) {
-                                  symptomController.LE_duration.value = index;
+                                  setState(() {
+                                    _month = index+1;
+                                  });
                                 },
                               ),
-                            );
-                          }),
-                          Obx(() {
-                            return SizedBox(
+                            ),
+                          SizedBox(
                               height: 200,
                               width:100,
                               child: ListWheelScrollView(
                                 itemExtent: 40,
                                 diameterRatio: 8,
                                 children: [
-                                  listViewContainer("1 day", 0),
-                                  listViewContainer("2 days", 1),
-                                  listViewContainer("3 days", 2),
-                                  listViewContainer("4 days", 3),
-                                  listViewContainer("5 days", 4),
-                                  listViewContainer("6 days", 5),
-                                  listViewContainer("1 week", 6),
-                                  listViewContainer("2 week", 7),
+                                  for(var i=0;i<=10;i++)
+                                    yearListViewContainer('${2013+i}', 2013+i),
                                 ],
                                 onSelectedItemChanged: (index) {
-                                  symptomController.LE_duration.value = index;
+                                  setState(() {
+                                    _year = index+2013;
+                                  });
                                 },
                               ),
-                            );
-                          })
+                            )
                         ],
                       )
                     ),
@@ -184,6 +194,11 @@ class Question3 extends StatelessWidget {
                                     alignment: Alignment.center,
                                     child: GestureDetector(
                                       onTap:() {
+                                        questionnaireController.questions[3]= {
+                                          "question_number":"3",
+                                          "question":"age_when_i_got_my_first_period",
+                                          "question_answer":_date.toString()+"/"+_month.toString()+"/"+_year.toString()
+                                        };
                                         Get.to(Question4());
                                       },
                                       child: Card(
@@ -217,20 +232,62 @@ class Question3 extends StatelessWidget {
                 ))));
   }
 
-  Widget listViewContainer(String text, int i) {
+  Widget dateListViewContainer(String text, int i) {
     return Container(
       height: 30,
       width: double.maxFinite,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: symptomController.LE_duration.value == i ? MyColors.white : null,
+        color: _date== i ? MyColors.white : null,
       ),
       child: Center(
         child: Text(
           text,
           style: TextStyle(
               fontSize: 20,
-              color: symptomController.LE_duration.value == i
+              color: _date == i
+                  ? MyColors.black
+                  : MyColors.grey300),
+        ),
+      ),
+    );
+  }
+
+  Widget monthListViewContainer(String text, int i) {
+    return Container(
+      height: 30,
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: _month == i ? MyColors.white : null,
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+              fontSize: 20,
+              color: _month == i
+                  ? MyColors.black
+                  : MyColors.grey300),
+        ),
+      ),
+    );
+  }
+
+  Widget yearListViewContainer(String text, int i) {
+    return Container(
+      height: 30,
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: _year == i ? MyColors.white : null,
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+              fontSize: 20,
+              color: _year == i
                   ? MyColors.black
                   : MyColors.grey300),
         ),

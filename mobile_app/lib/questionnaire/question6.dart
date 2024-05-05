@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/questionnaire/question1_no.dart';
 import 'package:namer_app/questionnaire/question1_yes.dart';
@@ -17,34 +18,6 @@ import 'package:get/get.dart';
 import 'package:namer_app/components/text_card.dart';
 import 'package:namer_app/questionnaire/question6_mood.dart';
 
-class AppPalette {
-  // Red
-  Color brightRose = HexColor("#DA2942");
-  Color orangeDew = HexColor("#FFBE71");
-  Color purpleMint = HexColor("#B75CEE");
-  Color black = HexColor("#000000");
-  Color offWhite = HexColor("#FFFFF0");
-  Color cherryBlossomLight = HexColor("#FFEFF1");
-  Color white = HexColor("#FFFFFF");
-  Color lightGrey = HexColor("#B9B9B9");
-  static const imperialRed = Color(0xFFE54B4B);
-
-  // White
-  static const seashell = Color(0xFFF7EBE8);
-
-  // Grey
-  static const grey = _GreyColors();
-}
-
-class _GreyColors {
-  const _GreyColors();
-
-  final grey50 = const Color(0xFFFAFAFA);
-  final grey100 = const Color(0xFFF5F5F5);
-}
-
-AppPalette appPalette = AppPalette();
-
 
 class Question6 extends StatefulWidget{
   Question6({super.key});
@@ -56,6 +29,7 @@ class Question6 extends StatefulWidget{
 class _Question6State extends State<Question6> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
   String _selected="";
   @override
   void initState() {
@@ -117,9 +91,9 @@ class _Question6State extends State<Question6> {
                           children: [
                             Container(
                               width: 300,
-                              child: Text('On a regular basis, help me ',
+                              child: Text('On a regular basis, help me',
                                   style: TextStyle(
-                                      color: appPalette.brightRose,
+                                      color: MyColors.brightRose,
                                       fontSize: 20,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w500)),
@@ -133,10 +107,13 @@ class _Question6State extends State<Question6> {
                                 width: width*0.9,
                                 child: GestureDetector(
                                     onTap: (){
-                                      Get.to(Question6Symptom());
+                                      // Get.to(Question6Symptom());
+                                      setState(() {
+                                        _selected="Manage my symptoms";
+                                      });
                                     },
                                     child: Card(
-                                        color: MyColors.offWhite,
+                                        color: _selected=="Manage my symptoms"?MyColors.orangeDew:MyColors.offWhite,
                                         elevation: 5,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -158,11 +135,12 @@ class _Question6State extends State<Question6> {
                                 width: width*0.9,
                                 child: GestureDetector(
                                     onTap: (){
-                                      // Get.to(Question1Yes());
-                                      Get.to(Question6Mood());
+                                      setState(() {
+                                        _selected="Journal my mood";
+                                      });
                                     },
                                     child: Card(
-                                        color: MyColors.offWhite,
+                                        color: _selected=="Journal my mood"?MyColors.orangeDew:MyColors.offWhite,
                                         elevation: 5,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -185,10 +163,13 @@ class _Question6State extends State<Question6> {
                                 child: GestureDetector(
                                     onTap: (){
                                       // Get.to(Question1Yes());
-                                      Get.to(Question6Understand());
+                                      // Get.to(Question6Understand());
+                                      setState(() {
+                                        _selected="Understand what works best for me & my body";
+                                      });
                                     },
                                     child: Card(
-                                        color: MyColors.offWhite,
+                                        color: _selected=="Understand what works best for me & my body"?MyColors.orangeDew:MyColors.offWhite,
                                         elevation: 5,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -238,7 +219,20 @@ class _Question6State extends State<Question6> {
                                       alignment: Alignment.center,
                                       child: GestureDetector(
                                         onTap:() {
-
+                                          questionnaireController.questions[6]= {
+                                            "question_number":"6",
+                                            "question":"On a regular basis, help me",
+                                            "question_answer":_selected
+                                          };
+                                          if(_selected=="Manage my symptoms"){
+                                            Get.to(Question6Symptom());
+                                          }
+                                          else if(_selected=="Journal my mood"){
+                                            Get.to(Question6Mood());
+                                          }
+                                          else if(_selected=="Understand what works best for me & my body"){
+                                            Get.to(Question6Understand());
+                                          }
                                         },
                                         child: Card(
                                             shape: RoundedRectangleBorder(

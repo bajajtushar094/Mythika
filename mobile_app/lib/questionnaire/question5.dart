@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/controllers/questionnaire_controller.dart';
 import 'package:namer_app/globals/colors.dart';
 import 'package:namer_app/questionnaire/question1_no.dart';
 import 'package:namer_app/questionnaire/question1_yes.dart';
@@ -43,21 +44,22 @@ class _GreyColors {
 
 AppPalette appPalette = AppPalette();
 
-
-class Question5 extends StatefulWidget{
+class Question5 extends StatefulWidget {
   Question5({super.key});
   @override
   _Question5State createState() => _Question5State();
 }
 
-
 class _Question5State extends State<Question5> {
   UserController userController = Get.put(UserController());
   SymptomController symptomController = Get.put(SymptomController());
-  String _selected="";
+  QuestionnaireController questionnaireController = Get.put(QuestionnaireController());
+  String _selected = "";
+  Set<String> _subanswers = {};
   @override
   void initState() {
     _selected = "";
+    _subanswers = {};
     super.initState();
   }
 
@@ -88,105 +90,109 @@ class _Question5State extends State<Question5> {
                             children: [
                               RichText(
                                   text: TextSpan(
-                                    style: TextStyle(
-                                        color: MyColors.purpleMint,
-                                        fontSize: 18,
-                                        decoration: TextDecoration.none,
-                                        fontWeight: FontWeight.w400),
-                                    children: [
-                                      TextSpan(text: 'Skip now'),
-                                      WidgetSpan(
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 2.0),
-                                          child: Icon(Icons.arrow_forward, color: MyColors.purpleMint),
-                                        ),
-                                      ),
-                                    ],
-                                  ))
+                                style: TextStyle(
+                                    color: MyColors.purpleMint,
+                                    fontSize: 18,
+                                    decoration: TextDecoration.none,
+                                    fontWeight: FontWeight.w400),
+                                children: [
+                                  TextSpan(text: 'Skip now'),
+                                  WidgetSpan(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 2.0),
+                                      child: Icon(Icons.arrow_forward,
+                                          color: MyColors.purpleMint),
+                                    ),
+                                  ),
+                                ],
+                              ))
                             ],
                           )),
-                      Expanded(child: Container(
-
-                      )),
+                      Expanded(child: Container()),
                       Row(
-                        //ROW 2
+                          //ROW 2
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               width: 300,
-                              child: Text('I‘ve undergone a medical/surgical procedure related to my reproductive health',
+                              child: Text(
+                                  'I‘ve undergone a medical/surgical procedure related to my reproductive health',
                                   style: TextStyle(
                                       color: appPalette.brightRose,
                                       fontSize: 20,
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.w500)),
                             ),
-
                           ]),
-                      Row(// ROW 3
+                      Row(
+                          // ROW 3
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                                width: width*0.9,
+                                width: width * 0.9,
                                 child: GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       // Get.to(Question1No());
                                       String value = "";
-                                      if(_selected!="no"){
-                                        value="no";
+                                      if (_selected != "no") {
+                                        value = "no";
                                       }
                                       setState(() => _selected = value);
                                     },
                                     child: Card(
-                                        color: _selected=="no"?MyColors.orangeDew:MyColors.offWhite,
+                                        color: _selected == "no"
+                                            ? MyColors.orangeDew
+                                            : MyColors.offWhite,
                                         elevation: 5,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
                                             'No',
                                             style: TextStyle(
-                                                fontSize: 20.0, color: MyColors.black, fontWeight: FontWeight.w400
-                                            ),
+                                                fontSize: 20.0,
+                                                color: MyColors.black,
+                                                fontWeight: FontWeight.w400),
                                           ),
-                                        )
-                                    )
-                                )
-                            ),
+                                        )))),
                           ]),
-                      Row(// ROW 3
+                      Row(
+                          // ROW 3
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                                width: width*0.9,
+                                width: width * 0.9,
                                 child: GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       // Get.to(Question1Yes());
                                       String value = "";
-                                      if(_selected!="doctor"){
-                                        value="doctor";
+                                      if (_selected != "doctor") {
+                                        value = "doctor";
                                       }
-                                      setState(() => _selected = value);
+                                      setState(() {
+                                        _selected = value;
+                                        _subanswers = {};
+                                      });
                                     },
                                     child: Card(
-                                        color: _selected=="doctor"?MyColors.orangeDew:MyColors.offWhite,
+                                        color: _selected == "doctor"
+                                            ? MyColors.orangeDew
+                                            : MyColors.offWhite,
                                         elevation: 5,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
                                             'Doctor has suggested something',
                                             style: TextStyle(
-                                                fontSize: 20.0, color: MyColors.black, fontWeight: FontWeight.w400
-                                            ),
+                                                fontSize: 20.0,
+                                                color: MyColors.black,
+                                                fontWeight: FontWeight.w400),
                                           ),
-                                        )
-                                    )
-                                )
-                            ),
+                                        )))),
                           ]),
-                      if(_selected=="doctor")
+                      if (_selected == "doctor")
                         SizedBox(
-                            width: width*0.95,
+                            width: width * 0.95,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -195,83 +201,128 @@ class _Question5State extends State<Question5> {
                                   children: [
                                     GestureDetector(
                                         onTap: () {
-                                          Get.to(LowEnergy());
+                                          setState(() {
+                                            if(_subanswers.contains("Remove uterus")){
+                                              _subanswers.remove("Remove uterus");
+                                            }
+                                            else{
+                                              _subanswers.add("Remove uterus");
+                                            }
+                                          });
                                         },
                                         child: text_card({
-                                          "text": "Remove uterus"
+                                          "text": "Remove uterus",
+                                          "selected": _subanswers
+                                              .contains("Remove uterus")
                                         })),
                                     GestureDetector(
                                       onTap: () {
+                                        setState(() {
+                                          if(_subanswers.contains("Remove Ovary")){
+                                            _subanswers.remove("Remove Ovary");
+                                          }
+                                          else{
+                                            _subanswers.add("Remove Ovary");
+                                          }
+                                        });
+                                      },
+                                      child: text_card({
+                                        "text": "Remove Ovary",
+                                        "selected": _subanswers.contains("Remove Ovary")
+                                      }),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if(_subanswers.contains("Remove Both Ovaries")){
+                                            _subanswers.remove("Remove Both Ovaries");
+                                          }
+                                          else{
+                                            _subanswers.add("Remove Both Ovaries");
+                                          }
+                                        });
+                                      },
+                                      child: text_card({
+                                        "text": "Remove Both Ovaries",
+                                        "selected": _subanswers.contains("Remove Both Ovaries")
+                                      }),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if(_subanswers.contains("non-HRT")){
+                                            _subanswers.remove("non-HRT");
+                                          }
+                                          else{
+                                            _subanswers.add("non-HRT");
+                                          }
+                                        });
+                                      },
+                                      child: text_card({
+                                        "text": "non-HRT",
+                                        "selected": _subanswers.contains("non-HRT")
+                                      }),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if(_subanswers.contains("HRT")){
+                                            _subanswers.remove("HRT");
+                                          }
+                                          else{
+                                            _subanswers.add("HRT");
+                                          }
+                                        });
                                       },
                                       child: text_card(
-                                          {"text": "Remove Ovary"}),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "Remove Both Ovaries"
-                                      }),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "non-HRT"
-                                      }),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "HRT"
-                                      }),
+                                          {"text": "HRT", "selected": _subanswers.contains("HRT")}),
                                     ),
                                   ],
                                 ),
                               ],
                             )),
-                      Row(// ROW 3
+                      Row(
+                          // ROW 3
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                                width: width*0.9,
+                                width: width * 0.9,
                                 child: GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       // Get.to(Question1Yes());
                                       String value = "";
-                                      if(_selected!="yes"){
-                                        value="yes";
+                                      if (_selected != "yes") {
+                                        value = "yes";
                                       }
                                       setState(() => _selected = value);
                                     },
                                     child: Card(
-                                        color: _selected=="yes"?MyColors.orangeDew:MyColors.offWhite,
+                                        color: _selected == "yes"
+                                            ? MyColors.orangeDew
+                                            : MyColors.offWhite,
                                         elevation: 5,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
                                             'Yes',
                                             style: TextStyle(
-                                                fontSize: 20.0, color: MyColors.black, fontWeight: FontWeight.w400
-                                            ),
+                                                fontSize: 20.0,
+                                                color: MyColors.black,
+                                                fontWeight: FontWeight.w400),
                                           ),
-                                        )
-                                    )
-                                )
-                            )
+                                        ))))
                           ]),
-                      if(_selected=="yes")
+                      if (_selected == "yes")
                         SizedBox(
-                            width: width*0.95,
+                            width: width * 0.95,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -280,45 +331,88 @@ class _Question5State extends State<Question5> {
                                   children: [
                                     GestureDetector(
                                         onTap: () {
-                                          Get.to(LowEnergy());
+                                          setState(() {
+                                            if(_subanswers.contains("Uterus removed")){
+                                              _subanswers.remove("Uterus removed");
+                                            }
+                                            else{
+                                              _subanswers.add("Uterus removed");
+                                            }
+                                          });
                                         },
                                         child: text_card({
-                                          "text": "Uterus removed"
+                                          "text": "Uterus removed",
+                                          "selected": _subanswers.contains("Uterus removed")
                                         })),
                                     GestureDetector(
                                       onTap: () {
+                                        setState(() {
+                                          if(_subanswers.contains("Ovary Removed")){
+                                            _subanswers.remove("Ovary Removed");
+                                          }
+                                          else{
+                                            _subanswers.add("Ovary Removed");
+                                          }
+                                        });
+                                      },
+                                      child: text_card({
+                                        "text": "Ovary Removed",
+                                        "selected": _subanswers.contains("Ovary Removed")
+                                      }),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if(_subanswers.contains("Both Ovaries Removed")){
+                                            _subanswers.remove("Both Ovaries Removed");
+                                          }
+                                          else{
+                                            _subanswers.add("Both Ovaries Removed");
+                                          }
+                                        });
+                                      },
+                                      child: text_card({
+                                        "text": "Both Ovaries Removed",
+                                        "selected": _subanswers.contains("Both Ovaries Removed")
+                                      }),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if(_subanswers.contains("non-HRT")){
+                                            _subanswers.remove("non-HRT");
+                                          }
+                                          else{
+                                            _subanswers.add("non-HRT");
+                                          }
+                                        });
+                                      },
+                                      child: text_card({
+                                        "text": "non-HRT",
+                                        "selected": _subanswers.contains("non-HRT")
+                                      }),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if(_subanswers.contains("HRT")){
+                                            _subanswers.remove("HRT");
+                                          }
+                                          else{
+                                            _subanswers.add("HRT");
+                                          }
+                                        });
                                       },
                                       child: text_card(
-                                          {"text": "Ovary Removed"}),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "Both Ovaries Removed"
-                                      }),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "non-HRT"
-                                      }),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                      },
-                                      child: text_card({
-                                        "text": "HRT"
-                                      }),
+                                          {"text": "HRT", "selected": _subanswers.contains("HRT")}),
                                     ),
                                   ],
                                 ),
@@ -328,14 +422,15 @@ class _Question5State extends State<Question5> {
                         height: 75,
                       ),
                       Container(
-                          height: height*0.12,
-                          margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                          height: height * 0.12,
+                          margin:
+                              const EdgeInsets.only(left: 20.0, right: 20.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: (){
+                                onTap: () {
                                   Get.back();
                                 },
                                 child: Card(
@@ -344,12 +439,13 @@ class _Question5State extends State<Question5> {
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
                                     child: Container(
-                                      height: width*0.12,
-                                      width: width*0.12,
+                                      height: width * 0.12,
+                                      width: width * 0.12,
                                       child: Padding(
-                                        padding:
-                                        const EdgeInsets.symmetric(horizontal: 2.0),
-                                        child: Icon(Icons.arrow_back_rounded, color: MyColors.white, size: 30),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 2.0),
+                                        child: Icon(Icons.arrow_back_rounded,
+                                            color: MyColors.white, size: 30),
                                       ),
                                     )),
                               ),
@@ -358,37 +454,44 @@ class _Question5State extends State<Question5> {
                                   Container(
                                       alignment: Alignment.center,
                                       child: GestureDetector(
-                                        onTap:() {
+                                        onTap: () {
+                                          questionnaireController.questions[5]= {
+                                            "question_number":"5",
+                                            "question":"I‘ve undergone a medical/surgical procedure related to my reproductive health",
+                                            "question_answer":_selected,
+                                            "question_subanswers":_subanswers.toList()
+                                          };
                                           Get.to(Question6());
                                         },
                                         child: Card(
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(50.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(50.0),
                                             ),
                                             color: MyColors.purpleMint,
                                             child: Container(
-                                              height: width*0.15,
-                                              width: width*0.15,
+                                              height: width * 0.15,
+                                              width: width * 0.15,
                                               child: Padding(
                                                 padding:
-                                                const EdgeInsets.symmetric(horizontal: 2.0),
-                                                child: Icon(Icons.arrow_forward_rounded, color: MyColors.white, size: 40),
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 2.0),
+                                                child: Icon(
+                                                    Icons.arrow_forward_rounded,
+                                                    color: MyColors.white,
+                                                    size: 40),
                                               ),
                                             )),
-                                      )
-
-                                  ),
+                                      )),
                                   Align(
                                       alignment: Alignment.topCenter,
-                                      child: Image.asset("assets/images/fools.png", fit: BoxFit.fill)
-                                  )
+                                      child: Image.asset(
+                                          "assets/images/fools.png",
+                                          fit: BoxFit.fill))
                                 ],
                               ),
-
                             ],
                           )),
-                    ])
-            )
-        ));
+                    ]))));
   }
 }

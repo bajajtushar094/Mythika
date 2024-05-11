@@ -104,15 +104,13 @@ class phone_number extends StatelessWidget {
                               // print("result from check User: "+ result.toString());
                               if (json.decode(result.toString())['success']) {
                                 Fluttertoast.showToast(
-                                  msg:
-                                      json.decode(result.toString())['message'],
+                                  msg: "User Exists",
                                   backgroundColor: MyColors.notificationGreen,
                                 );
                                 Get.to(Pin());
                               } else {
                                 Fluttertoast.showToast(
-                                  msg:
-                                      json.decode(result.toString())['message'],
+                                  msg: "User does not exists",
                                   backgroundColor: MyColors.brightRose,
                                 );
                                 Get.to(otp());

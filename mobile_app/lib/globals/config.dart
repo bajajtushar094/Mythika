@@ -1,5 +1,6 @@
 class Config{
-  static String LOCAL_SERVER_URL = "http://10.0.2.2:8080";
+  // static String LOCAL_SERVER_URL = "http://10.0.2.2:8080";
+  static String LOCAL_SERVER_URL = "http://13.232.115.225:8080";
   static String LOCAL_SERVER_URL_IP = "http://127.0.0.1:5000";
 
   static String REGISTER = '$LOCAL_SERVER_URL/auth';

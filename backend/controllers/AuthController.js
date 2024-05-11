@@ -6,18 +6,23 @@ const apiResponse = require("../helpers/ApiResponse");
 
 exports.register = async (req, res) => {
     try{
-        const {mobile, pin, age} = req.body;
+        const {mobile, pin, age, name} = req.body;
         
         let user = await User.findOne({mobile});
 
         if(user){
-            return apiResponse.errorResponse(req, res, "User already exists");
+            const validPassword = bcrypt.compare(pin, user.pin);
+
+            if(!validPassword){
+                return apiResponse.errorResponse(req, res, "Invalid password");
+            }
         }
+        else{
+            user = new User({mobile, pin, age, name});
 
-        user = new User({mobile, pin, age});
-
-        const salt = await bcrypt.genSalt(10);
-        user.pin = await bcrypt.hash(pin, salt);
+            const salt = await bcrypt.genSalt(10);
+            user.pin = await bcrypt.hash(pin, salt);
+        }
         
         const token = jwt.sign(
             {"mobile":user.mobile},
@@ -31,9 +36,10 @@ exports.register = async (req, res) => {
 
         await user.save();
 
-        return apiResponse.successResponse(req, res, "User created!");
+        return apiResponse.successResponse(req, res, "User created/LoggedIn!");
     }
     catch(error){
+        console.log("error: ", error);
         return res.status(500).json({
             error: error.message
         })
@@ -48,10 +54,10 @@ exports.checkUser = async (req, res) => {
         const user = await User.findOne({mobile});
 
         if(user==null){
-            return apiResponse.successResponse(req, res, false);
+            return apiResponse.errorResponse(req, res, "User does not exists");
         }
 
-        return apiResponse.successResponse(req, res, true);
+        return apiResponse.successResponse(req, res, "User exists");
     }
     catch(error){
         return apiResponse.errorResponse(res, res, error.message);

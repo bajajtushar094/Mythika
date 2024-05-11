@@ -38,6 +38,9 @@ const User = Schema({
     }],
     mrs_score:[{
         type: Object
+    }],
+    onboarding_questionnaire:[{
+        type: Object
     }]
 });
 

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,9 @@ import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:namer_app/components/text_card.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:namer_app/database/questionnaire_service.dart';
 
 class AppPalette {
   // Red
@@ -183,12 +187,28 @@ class _Question7State extends State<Question7> {
                                   Container(
                                       alignment: Alignment.center,
                                       child: GestureDetector(
-                                        onTap: () {
+                                        onTap: () async {
                                           questionnaireController.questions[7]= {
                                             "question_number":"7",
                                             "question":"i_also_have",
                                             "question_answer":_answers.toList()
                                           };
+
+                                          final result = await QuestionnaireService().addQuestion();
+                                          if(json.decode(result.toString())['success']){
+                                            Fluttertoast.showToast(
+                                              msg: json.decode(result.toString())['message'],
+                                              backgroundColor: MyColors.notificationGreen,
+                                            );
+                                          }
+                                          else{
+                                            Fluttertoast.showToast(
+                                              msg: json.decode(result.toString())['message'],
+                                              backgroundColor: MyColors.brightRose,
+                                            );
+                                          }
+
+
                                           Get.to(landing_page());
                                         },
                                         child: Card(

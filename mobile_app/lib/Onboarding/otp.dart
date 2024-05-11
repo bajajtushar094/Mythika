@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/globals/colors.dart';
+import 'package:namer_app/globals/fonts.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,9 +32,19 @@ class _GreyColors {
 
 AppPalette appPalette = AppPalette();
 
-class otp extends StatelessWidget {
+class otp extends StatefulWidget{
+  otp({super.key});
+
+  @override
+  _otpState createState() => _otpState();
+}
+
+
+class _otpState extends State<otp> {
   @override
   Widget build(BuildContext context) {
+    int width = MediaQuery.of(context).size.width.floor();
+    int height = MediaQuery.of(context).size.height.floor();
     return Scaffold(
         body: Container(
             decoration: BoxDecoration(
@@ -46,29 +57,27 @@ class otp extends StatelessWidget {
                 width: double.maxFinite,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
+                      margin: EdgeInsets.only(left: width*0.15),
+                        width: width*0.7,
                         child: RichText(
                           text: TextSpan(
                             style: TextStyle(
-                                color: appPalette.brightRose,
-                                fontSize: 26,
-                                decoration: TextDecoration.none,
-                                fontWeight: FontWeight.w900),
+                                color: appPalette.brightRose).merge(FontStyles.text26Bold),
                             children: [
                               TextSpan(text: 'Entry your OTP'),
                             ],
                           ),
                         )),
                     Container(
-                      margin: const EdgeInsets.only(left:50, right: 50),
+                      margin: EdgeInsets.only(left: width*0.15),
+                        width: width*0.7,
                         child: RichText(
                           text: TextSpan(
                             style: TextStyle(
-                                color: appPalette.brightRose,
-                                fontSize: 18,
-                                decoration: TextDecoration.none,
-                                fontWeight: FontWeight.w600),
+                                color: appPalette.brightRose).merge(FontStyles.text18),
                             children: [
                               TextSpan(
                                   text: 'You would have received an OTP. Let’s verify it’s you 🚀'),
@@ -76,91 +85,101 @@ class otp extends StatelessWidget {
                           ),
                         )),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                            height: 50,
-                            width: 50,
-                            margin: const EdgeInsets.only(
-                                top: 50.0, left: 60),
+                            height: 55,
+                            width: 55,
+                            margin: EdgeInsets.only(
+                                top: 50.0, left: width*0.01),
                             child: Card(
                               color: MyColors.cherryBlossomLight,
                               elevation: 5,
                               child: TextField(
+                                maxLength: 1,
+                                textInputAction: TextInputAction.next,
                                 onSubmitted: (value) {
                                   // Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
                                 },
                                 keyboardType: TextInputType.number,
+                                style: TextStyle(color: MyColors.black).merge(FontStyles.text22),
                                 decoration: InputDecoration(
+                                  counterText: '',
                                   border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      fontSize: 20.0, color: MyColors.grey300, fontWeight: FontWeight.w400),
-                                  contentPadding: EdgeInsets.all(10.0),
+                                  contentPadding: EdgeInsets.only(left:15.0),
                                   hintText: '',
                                 ),
                               ),
                             )),
                         Container(
-                            height: 50,
-                            width: 50,
-                            margin: const EdgeInsets.only(
-                                top: 50.0, left: 20),
+                            height: 55,
+                            width: 55,
+                            margin: EdgeInsets.only(
+                                top: 50.0, left: width*0.07),
                             child: Card(
                               color: MyColors.cherryBlossomLight,
                               elevation: 5,
                               child: TextField(
+                                maxLength: 1,
+                                textInputAction: TextInputAction.next,
+                                style: TextStyle(color: MyColors.black).merge(FontStyles.text22),
                                 onSubmitted: (value) {
                                   // Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
                                 },
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
+                                  counterText: '',
                                   border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      fontSize: 20.0, color: MyColors.grey300, fontWeight: FontWeight.w400),
-                                  contentPadding: EdgeInsets.all(10.0),
+                                  contentPadding: EdgeInsets.only(left:15.0),
                                   hintText: '',
                                 ),
                               ),
                             )),
                         Container(
-                            height: 50,
-                            width: 50,
-                            margin: const EdgeInsets.only(
-                                top: 50.0, left: 20),
+                            height: 55,
+                            width: 55,
+                            margin: EdgeInsets.only(
+                                top: 50.0, left: width*0.07),
                             child: Card(
                               color: MyColors.cherryBlossomLight,
                               elevation: 5,
                               child: TextField(
+                                textInputAction: TextInputAction.next,
+                                maxLength: 1,
+                                style: TextStyle(color: MyColors.black).merge(FontStyles.text22),
                                 onSubmitted: (value) {
                                   // Navigator.of(context).push(MaterialPageRoute(builder: (context) => landing_page()));
                                 },
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
+                                  counterText: '',
                                   border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      fontSize: 20.0, color: MyColors.grey300, fontWeight: FontWeight.w400),
-                                  contentPadding: EdgeInsets.all(10.0),
+                                  contentPadding: EdgeInsets.only(left:15.0),
                                   hintText: '',
                                 ),
                               ),
                             )),
                         Container(
-                            height: 50,
-                            width: 50,
-                            margin: const EdgeInsets.only(
-                                top: 50.0, left: 20, right: 50),
+                            height: 55,
+                            width: 55,
+                            margin: EdgeInsets.only(
+                                top: 50.0, left: width*0.07),
                             child: Card(
                               color: MyColors.cherryBlossomLight,
                               elevation: 5,
                               child: TextField(
+                                textInputAction: TextInputAction.next,
+                                maxLength: 1,
+                                style: TextStyle(color: MyColors.black).merge(FontStyles.text22),
                                 onSubmitted: (value) {
                                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => name()));
                                 },
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
+                                  counterText: '',
                                   border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      fontSize: 20.0, color: MyColors.grey300, fontWeight: FontWeight.w400),
-                                  contentPadding: EdgeInsets.all(10.0),
+                                  contentPadding: EdgeInsets.only(left:15.0),
                                   hintText: '',
                                 ),
                               ),

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import '../main_screens/landing_page.dart';
 import 'package:namer_app/controllers/symptom_controller.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:get/get.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AppPalette {
   // Red

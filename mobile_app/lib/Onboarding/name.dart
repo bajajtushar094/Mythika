@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/Onboarding/age.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
+import 'package:namer_app/globals/fonts.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,6 +44,8 @@ class name extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int width = MediaQuery.of(context).size.width.floor();
+    int height = MediaQuery.of(context).size.height.floor();
     return LoaderOverlay(
         child: Scaffold(
             body: Container(
@@ -56,28 +59,29 @@ class name extends StatelessWidget {
                     width: double.maxFinite,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
+                          margin: EdgeInsets.only(left: width*0.1),
                             child: RichText(
                               text: TextSpan(
                                 style: TextStyle(
-                                    color: appPalette.brightRose,
-                                    fontSize: 26,
-                                    decoration: TextDecoration.none,
-                                    fontWeight: FontWeight.w600),
+                                    color: appPalette.brightRose).merge(FontStyles.text22),
                                 children: [
                                   TextSpan(text: 'What should we call you?'),
                                 ],
                               ),
                             )),
                         Container(
-                            height: 50,
+                            height: height*0.07,
+                            width: width*0.9,
                             margin: const EdgeInsets.only(
                                 top: 50.0, left: 20, right: 20),
                             child: Card(
                               color: MyColors.cherryBlossomLight,
                               elevation: 5,
                               child: TextField(
+                                style: TextStyle(color: MyColors.black).merge(FontStyles.text18),
                                 onSubmitted: (value) async {
                                   userController.name.value = value;
                                   // context.loaderOverlay.show();
@@ -92,9 +96,8 @@ class name extends StatelessWidget {
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                      fontSize: 20.0, color: MyColors.grey300, fontWeight: FontWeight.w400),
-                                  contentPadding: EdgeInsets.all(10.0),
+                                  hintStyle: TextStyle(color: MyColors.grey300).merge(FontStyles.text18),
+                                  contentPadding: EdgeInsets.only(left:10.0),
                                   hintText: 'Type your name here, pretty',
                                 ),
                               ),

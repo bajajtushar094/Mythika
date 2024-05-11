@@ -3,6 +3,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
+import 'package:namer_app/globals/fonts.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,9 +44,10 @@ class phone_number extends StatelessWidget {
   UserController userController = Get.put(UserController());
   phone_number({super.key});
 
-
   @override
   Widget build(BuildContext context) {
+    int width = MediaQuery.of(context).size.width.floor();
+    int height = MediaQuery.of(context).size.height.floor();
     return Scaffold(
         body: Container(
             decoration: BoxDecoration(
@@ -58,56 +60,59 @@ class phone_number extends StatelessWidget {
                 width: double.maxFinite,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
+                        margin: EdgeInsets.only(left: width*0.15),
+                        width: width*0.7,
                         child: RichText(
                       text: TextSpan(
                         style: TextStyle(
-                            color: appPalette.brightRose,
-                            fontSize: 26,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w900),
+                            color: appPalette.brightRose).merge(FontStyles.text26Bold),
                         children: [
                           TextSpan(text: 'Ready, set, go!'),
                         ],
                       ),
                     )),
                     Container(
+                        margin: EdgeInsets.only(left: width*0.15),
+                        width: width*0.7,
                         child: RichText(
                       text: TextSpan(
                         style: TextStyle(
-                            color: appPalette.brightRose,
-                            fontSize: 18,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w600),
+                            color: appPalette.brightRose).merge(FontStyles.text20),
                         children: [
                           TextSpan(
-                              text: 'Let us log into this safe place of yours'),
+                              text: 'Let us log into this safe place of yours ☺️'),
                         ],
                       ),
                     )),
                     Container(
-                        height: 50,
-                        margin: const EdgeInsets.only(
-                            top: 50.0, left: 20, right: 20),
+                        height: height*0.07,
+                        width: width*0.9,
+                        margin: EdgeInsets.only(top: height*0.05, left: width*0.05),
                         child: Card(
                           color: MyColors.cherryBlossomLight,
                           elevation: 5,
                           child: TextField(
                             onSubmitted: (value) async {
                               userController.phone_number.value = value;
-                              final result = await UserService().checkUserExists(phone_number: userController.phone_number.value);
-                              print("result from check User: "+ result.toString());
-                              if(json.decode(result.toString())['success']){
+                              final result = await UserService()
+                                  .checkUserExists(
+                                      phone_number:
+                                          userController.phone_number.value);
+                              // print("result from check User: "+ result.toString());
+                              if (json.decode(result.toString())['success']) {
                                 Fluttertoast.showToast(
-                                  msg: json.decode(result.toString())['message'],
+                                  msg:
+                                      json.decode(result.toString())['message'],
                                   backgroundColor: MyColors.notificationGreen,
                                 );
                                 Get.to(Pin());
-                              }
-                              else{
+                              } else {
                                 Fluttertoast.showToast(
-                                  msg: json.decode(result.toString())['message'],
+                                  msg:
+                                      json.decode(result.toString())['message'],
                                   backgroundColor: MyColors.brightRose,
                                 );
                                 Get.to(otp());
@@ -118,7 +123,7 @@ class phone_number extends StatelessWidget {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintStyle: TextStyle(
-                                  fontSize: 20.0, color: MyColors.grey300, fontWeight: FontWeight.w400),
+                                  color: MyColors.grey300).merge(FontStyles.text20),
                               contentPadding: EdgeInsets.all(10.0),
                               hintText: 'Please enter your phone number',
                             ),

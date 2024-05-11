@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/controllers/user_controller.dart';
 import 'package:namer_app/globals/colors.dart';
+import 'package:namer_app/globals/fonts.dart';
 import 'package:namer_app/main_screens/landing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -80,24 +81,18 @@ class _AgeState extends State<Age> {
                         child: RichText(
                       text: TextSpan(
                         style: TextStyle(
-                            color: appPalette.brightRose,
-                            fontSize: 26,
-                            decoration: TextDecoration.none,
-                            fontWeight: FontWeight.w900),
+                            color: appPalette.brightRose).merge(FontStyles.text22),
                         children: [
-                          TextSpan(text: 'Tell us your age!'),
+                          TextSpan(text: 'Tell us your age'),
                         ],
                       ),
                     )),
                     Container(
-                        margin: const EdgeInsets.only(left: 30.0, right: 30.0),
+                        width: width*0.8,
                         child: RichText(
                           text: TextSpan(
                             style: TextStyle(
-                                color: appPalette.brightRose,
-                                fontSize: 18,
-                                decoration: TextDecoration.none,
-                                fontWeight: FontWeight.w600),
+                                color: appPalette.brightRose).merge(FontStyles.text18Italic),
                             children: [
                               TextSpan(
                                   text:
@@ -106,7 +101,7 @@ class _AgeState extends State<Age> {
                           ),
                         )),
                     Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      margin: EdgeInsets.only(left: width*0.08, right: width*0.08 , top: height/30),
                       child: Obx(() {
                         return SizedBox(
                           height: 200,
@@ -125,7 +120,7 @@ class _AgeState extends State<Age> {
                         );
                       }),
                     ),
-                    SizedBox(height: 150),
+                    SizedBox(height: height/20),
                     Container(
                         height: height*0.12,
                         margin: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -198,10 +193,9 @@ class _AgeState extends State<Age> {
         child: Text(
           text,
           style: TextStyle(
-              fontSize: 20,
               color: userController.age.value == i
                   ? MyColors.black
-                  : MyColors.grey300),
+                  : MyColors.grey300).merge(FontStyles.text20Bold),
         ),
       ),
     );
